@@ -27,5 +27,5 @@ section labels (`HF · 13.56 MHZ`). Overflow menus instead of icon rows; one pri
 ```bash
 flutter analyze
 flutter test $(ls test/*_test.dart | grep -v recovery_test.dart)   # recovery_test needs `flutter build linux` first
-flutter build linux --release   # quick visual check; the Demo device is enabled in Settings › Developer
+flutter build linux --release   # quick visual check; turn on Settings › "Activate emulated device" for a fake Demo device
 ```
