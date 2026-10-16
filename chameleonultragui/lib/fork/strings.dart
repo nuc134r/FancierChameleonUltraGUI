@@ -78,6 +78,24 @@ class ForkStrings {
   String get connectionFailed => _get('connectionFailed');
   String get refresh => _get('refresh');
   String get firmwareBroken => _get('firmwareBroken');
+  String get modeEmulate => _get('modeEmulate');
+  String get modeRead => _get('modeRead');
+  String get active => _get('active');
+  String get setActive => _get('setActive');
+  String get loadCard => _get('loadCard');
+  String get disconnect => _get('disconnect');
+  String get demoDevice => _get('demoDevice');
+  String get clearSlot => _get('clearSlot');
+  String get viewData => _get('viewData');
+  String get saveToLibrary => _get('saveToLibrary');
+  String get slotEmpty => _get('slotEmpty');
+  String get slotDisabled => _get('slotDisabled');
+  String get loadFromLibrary => _get('loadFromLibrary');
+  String get editSlot => _get('editSlot');
+  String get emulationOptions => _get('emulationOptions');
+  String get noEmulation => _get('noEmulation');
+  String get outdatedProtocol => _get('outdatedProtocol');
+  String slotsUsed(int used) => _get('slotsUsed').replaceAll('{used}', '$used');
 
   String deleted(String name) => _get('deleted').replaceAll('{name}', name);
   String loadedToSlot(int slot) =>
@@ -168,6 +186,25 @@ const Map<String, String> _en = {
   'connectionFailed': 'Could not connect',
   'refresh': 'Refresh',
   'firmwareBroken': 'Needs firmware',
+  'modeEmulate': 'Emulate',
+  'modeRead': 'Read',
+  'active': 'Active',
+  'setActive': 'Set as active',
+  'loadCard': 'Load card…',
+  'disconnect': 'Disconnect',
+  'demoDevice': 'Demo device: data is fake. Turn it off in Settings.',
+  'clearSlot': 'Clear',
+  'viewData': 'View data',
+  'saveToLibrary': 'Save to library',
+  'slotEmpty': 'Empty',
+  'slotDisabled': 'Off',
+  'loadFromLibrary': 'Load from library',
+  'editSlot': 'Edit',
+  'emulationOptions': 'Magic modes, PRNG, write mode and Mfkey32 nonce collection are under HF › Edit.',
+  'noEmulation': 'This card type cannot be emulated yet.',
+  'outdatedProtocol':
+      'This firmware uses an old protocol. Update it to use the app fully.',
+  'slotsUsed': 'Slots · {used}/8 used',
 };
 
 const Map<String, String> _ru = {
@@ -243,4 +280,23 @@ const Map<String, String> _ru = {
   'connectionFailed': 'Не удалось подключиться',
   'refresh': 'Обновить',
   'firmwareBroken': 'Нужна прошивка',
+  'modeEmulate': 'Эмуляция',
+  'modeRead': 'Чтение',
+  'active': 'Активен',
+  'setActive': 'Сделать активным',
+  'loadCard': 'Загрузить карту…',
+  'disconnect': 'Отключить',
+  'demoDevice':
+      'Демо-устройство: данные ненастоящие. Отключается в настройках.',
+  'clearSlot': 'Очистить',
+  'viewData': 'Данные',
+  'saveToLibrary': 'В библиотеку',
+  'slotEmpty': 'Пусто',
+  'slotDisabled': 'Выкл',
+  'loadFromLibrary': 'Из библиотеки',
+  'editSlot': 'Изменить',
+  'emulationOptions': 'Magic-режимы, PRNG, режим записи и сбор nonce для Mfkey32 — в HF › Изменить.',
+  'noEmulation': 'Этот тип карты пока нельзя эмулировать.',
+  'outdatedProtocol': 'Прошивка использует старый протокол. Обновите её для полной работы приложения.',
+  'slotsUsed': 'Слоты · занято {used}/8',
 };

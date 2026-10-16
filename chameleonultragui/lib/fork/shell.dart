@@ -1,13 +1,12 @@
 import 'package:chameleonultragui/fork/device/connect_view.dart';
+import 'package:chameleonultragui/fork/device/device_view.dart';
 import 'package:chameleonultragui/fork/library/library_page.dart';
 import 'package:chameleonultragui/fork/strings.dart';
 import 'package:chameleonultragui/fork/theme.dart';
 import 'package:chameleonultragui/gui/page/debug.dart';
 import 'package:chameleonultragui/gui/page/flashing.dart';
-import 'package:chameleonultragui/gui/page/home.dart';
 import 'package:chameleonultragui/gui/page/read_card.dart';
 import 'package:chameleonultragui/gui/page/settings.dart';
-import 'package:chameleonultragui/gui/page/slot_manager.dart';
 import 'package:chameleonultragui/gui/page/tools.dart';
 import 'package:chameleonultragui/main.dart';
 import 'package:flutter/material.dart';
@@ -143,17 +142,7 @@ class _AppShellState extends State<AppShell> {
         if (!connector.connected) {
           return const DeviceOfflineView();
         }
-        return _LegacyPage(
-          actions: [
-            IconButton(
-              tooltip: strings.slots,
-              icon: const Icon(Icons.view_list_outlined),
-              onPressed: () =>
-                  pushDeviceRoute(context, 'slots', const SlotManagerPage()),
-            ),
-          ],
-          child: const HomePage(),
-        );
+        return const DeviceView();
       case _Tab.scan:
         if (!connector.connected) {
           return Scaffold(
@@ -231,9 +220,8 @@ class SettingsButton extends StatelessWidget {
 // them, the shell lays its top-bar actions over the right end of that AppBar.
 class _LegacyPage extends StatelessWidget {
   final Widget child;
-  final List<Widget> actions;
 
-  const _LegacyPage({required this.child, this.actions = const []});
+  const _LegacyPage({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +235,7 @@ class _LegacyPage extends StatelessWidget {
           height: kToolbarHeight,
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [...actions, const SettingsButton()],
+            children: const [SettingsButton()],
           ),
         ),
       ],

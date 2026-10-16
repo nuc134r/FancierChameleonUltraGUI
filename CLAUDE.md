@@ -23,7 +23,8 @@ Upstream is merged into `better-ui` regularly, so:
 - `shell.dart` — bottom bar (Device, Scan, Library, Tools; rail at >= 840 dp), Settings gear, `pushDeviceRoute`
   (routes closed on disconnect). Upstream pages that are not redesigned yet are wrapped in `_LegacyPage`.
 - `theme.dart` — dark PCB-gold theme, `monoStyle` (RobotoMono for data only), `SectionLabel`, `EmptyState`.
-- `device/` — Device tab (offline/connect view).
+- `device/` — Device tab: offline/connect view, connected view with slots, Slot page, `loadCardToSlot`.
+- `library/card_picker.dart` — shared "pick a card" sheet.
 - `library/` — Library (Cards | Keys tabs), Card page (Info | Data | Keys), shared actions.
 
 ## Look
@@ -34,5 +35,5 @@ section labels (`HF · 13.56 MHZ`). Overflow menus instead of icon rows; one pri
 ```bash
 flutter analyze
 flutter test $(ls test/*_test.dart | grep -v recovery_test.dart)   # recovery_test needs `flutter build linux` first
-flutter build linux --release   # quick visual check; turn on Settings › "Activate emulated device" for a fake Demo device
+flutter build linux --release   # quick visual check (run `flutter clean` first if icons show as boxes: stale icon font); turn on Settings › "Activate emulated device" for a fake Demo device
 ```

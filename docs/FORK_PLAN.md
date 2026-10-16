@@ -16,13 +16,14 @@ https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4 — tick items as they land on
 - [x] Offline state: "No device" empty state with found devices as rows (model, USB/BLE, port, DFU),
       Connect per row, live scanning indicator, Refresh, manual port connect in ⋮, demo-mode hint
 - [x] BLE "connecting" state inline (no separate page)
-- [ ] Connected header: model, connection, battery, firmware version, Emulate | Read switch,
+- [x] Connected header: model, connection, battery, firmware version, Emulate | Read switch,
       ⋮ with Disconnect, Device settings, Check for firmware update
-- [ ] Slots as a list of 8 rows (HF/LF card names, active slot highlighted); tap opens Slot page,
+- [x] Slots as a list of 8 rows (HF/LF card names, active slot highlighted); tap opens Slot page,
       ⋮ / long-press sets it active
-- [ ] Slot page: HF and LF sections (enable switch, card summary, Load from library, Edit, Clear),
-      emulation options collapsed, nonces → Mfkey32, View data, Save to library
-- [ ] Card page: Load to slot button
+- [x] Slot page: HF and LF sections (enable switch, card summary, Load from library, Edit, Clear),
+      View data, Save to library
+- [ ] Slot page: emulation options inline (today they are in upstream's Edit dialog, with Mfkey32)
+- [x] Card page: Load to slot button
 - [ ] Device settings as a grouped page (Firmware, Buttons, Display, Bluetooth, Power, Danger zone)
 
 ## 3. Scan tab

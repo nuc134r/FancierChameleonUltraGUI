@@ -1,3 +1,4 @@
+import 'package:chameleonultragui/fork/device/slot_page.dart';
 import 'package:chameleonultragui/fork/library/library_actions.dart';
 import 'package:chameleonultragui/fork/shell.dart';
 import 'package:chameleonultragui/fork/strings.dart';
@@ -247,13 +248,30 @@ class _CardPageState extends State<CardPage>
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-          child: FilledButton.icon(
-            style: FilledButton.styleFrom(
-              minimumSize: const Size.fromHeight(48),
-            ),
-            onPressed: () => _writeToTag(card),
-            icon: const Icon(Icons.system_update_alt),
-            label: Text(strings.writeToTag),
+          child: Row(
+            children: [
+              Expanded(
+                child: FilledButton.icon(
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size.fromHeight(48),
+                  ),
+                  onPressed: () => loadCardToChosenSlot(context, card),
+                  icon: const Icon(Icons.download_for_offline_outlined),
+                  label: Text(strings.loadToSlot),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(48),
+                  ),
+                  onPressed: () => _writeToTag(card),
+                  icon: const Icon(Icons.system_update_alt),
+                  label: Text(strings.writeToTag),
+                ),
+              ),
+            ],
           ),
         ),
       ),
