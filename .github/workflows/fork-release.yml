@@ -1,0 +1,119 @@
+name: Fork release APK
+
+# Push a tag like v1.2.0 to build signed APKs and publish a GitHub release.
+# "Run workflow" from the Actions tab: with a version (e.g. 2.3.1) it tags the commit and publishes the
+# release the same way; without one it only builds the APKs as a downloadable artifact.
+# See docs/FORK_RELEASING.md (one-time setup: signing secrets, disabling upstream's workflows).
+on:
+  push:
+    tags: ['v[0-9]*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version to tag and publish, e.g. 2.3.1 (empty = build only)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+    defaults:
+      run:
+        working-directory: ./chameleonultragui
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # tags for .github/fork/version.sh
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.7
+          channel: stable
+          cache: true
+
+      - name: Version from tag
+        id: version
+        env:
+          REQUESTED: ${{ inputs.version }}
+        run: |
+          if [[ -n "$REQUESTED" ]]; then
+            [[ "$REQUESTED" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]] || { echo "::error::Not a version: $REQUESTED"; exit 1; }
+            git rev-parse -q --verify "refs/tags/v$REQUESTED" >/dev/null && { echo "::error::v$REQUESTED already exists"; exit 1; }
+            echo "name=$REQUESTED" >> "$GITHUB_OUTPUT"
+            echo "tag=v$REQUESTED" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=$(bash ../.github/fork/version.sh)" >> "$GITHUB_OUTPUT"
+            [[ "$GITHUB_REF_TYPE" == "tag" ]] && echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
+          fi
+          echo "number=${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
+      - name: Restore signing key
+        if: env.HAS_KEYSTORE == 'true'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          # android/app/build.gradle resolves storeFile relative to android/app.
+          echo "$KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
+          cat > android/key.properties <<EOF
+          storeFile=upload-keystore.jks
+          storePassword=$KEYSTORE_PASSWORD
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
+          EOF
+
+      - name: Warn about debug signing
+        if: env.HAS_KEYSTORE != 'true'
+        run: echo "::warning::ANDROID_KEYSTORE_BASE64 is not set — APKs are signed with a throwaway debug key and cannot update each other. See docs/FORK_RELEASING.md."
+
+      - run: flutter pub get
+      # recovery_test.dart needs the desktop librecovery from `flutter build linux`; upstream's Build APP covers it.
+      - run: flutter test $(ls test/*_test.dart | grep -v recovery_test.dart)
+
+      - name: Build APKs
+        run: |
+          args="--release --build-name=${{ steps.version.outputs.name }} --build-number=${{ steps.version.outputs.number }}"
+          flutter build apk $args
+          flutter build apk $args --split-per-abi
+          mkdir -p dist
+          v="${{ steps.version.outputs.name }}"
+          cp build/app/outputs/flutter-apk/app-release.apk "dist/chameleon-$v.apk"
+          for abi in arm64-v8a armeabi-v7a x86_64; do
+            cp "build/app/outputs/flutter-apk/app-$abi-release.apk" "dist/chameleon-$v-$abi.apk"
+          done
+          ls -la dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chameleon-apk-${{ steps.version.outputs.name }}
+          path: chameleonultragui/dist/*.apk
+
+      - name: Publish release
+        if: steps.version.outputs.tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          # Notes: the version's FORK_CHANGELOG.md section, followed by GitHub's generated "Full Changelog" link.
+          bash ../.github/fork/changelog.sh "${{ steps.version.outputs.name }}" > notes.md
+          [[ -s notes.md ]] || echo "::warning::FORK_CHANGELOG.md has no section for ${{ steps.version.outputs.name }}"
+          # --target creates the tag on the built commit when it does not exist yet (manual runs).
+          gh release create "$TAG" dist/*.apk \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Chameleon ${{ steps.version.outputs.name }}" \
+            --notes-file notes.md \
+            --generate-notes \
+            $([[ "$TAG" == *-* ]] && echo --prerelease)
