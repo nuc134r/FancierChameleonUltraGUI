@@ -96,6 +96,24 @@ class ForkStrings {
   String get noEmulation => _get('noEmulation');
   String get outdatedProtocol => _get('outdatedProtocol');
   String slotsUsed(int used) => _get('slotsUsed').replaceAll('{used}', '$used');
+  String get groupFirmware => _get('groupFirmware');
+  String get groupButtons => _get('groupButtons');
+  String get groupLed => _get('groupLed');
+  String get groupBluetooth => _get('groupBluetooth');
+  String get groupPower => _get('groupPower');
+  String get dangerZone => _get('dangerZone');
+  String get press => _get('press');
+  String get longPressSuffix => _get('longPressSuffix');
+  String get pairingRequired => _get('pairingRequired');
+  String get pairingHint => _get('pairingHint');
+  String get notSupported => _get('notSupported');
+  String get enterDfuHint => _get('enterDfuHint');
+  String get flashLatestHint => _get('flashLatestHint');
+  String get flashZipHint => _get('flashZipHint');
+  String get resetSettingsHint => _get('resetSettingsHint');
+  String get factoryResetHint => _get('factoryResetHint');
+  String get seconds => _get('seconds');
+  String get ms => _get('ms');
 
   String deleted(String name) => _get('deleted').replaceAll('{name}', name);
   String loadedToSlot(int slot) =>
@@ -205,6 +223,24 @@ const Map<String, String> _en = {
   'outdatedProtocol':
       'This firmware uses an old protocol. Update it to use the app fully.',
   'slotsUsed': 'Slots · {used}/8 used',
+  'groupFirmware': 'Firmware',
+  'groupButtons': 'Buttons',
+  'groupLed': 'LEDs',
+  'groupBluetooth': 'Bluetooth',
+  'groupPower': 'Power',
+  'dangerZone': 'Danger zone',
+  'press': 'press',
+  'longPressSuffix': 'long press',
+  'pairingRequired': 'Require pairing',
+  'pairingHint': 'Ask for a PIN before a phone can connect over BLE',
+  'notSupported': 'Not supported by this firmware',
+  'enterDfuHint': 'Reboots into firmware update mode',
+  'flashLatestHint': 'Download and install the newest firmware',
+  'flashZipHint': 'Install firmware from a .zip file',
+  'resetSettingsHint': 'Animations, buttons and BLE back to defaults',
+  'factoryResetHint': 'Erases all slots and settings',
+  'seconds': 's',
+  'ms': 'ms',
 };
 
 const Map<String, String> _ru = {
@@ -299,4 +335,22 @@ const Map<String, String> _ru = {
   'noEmulation': 'Этот тип карты пока нельзя эмулировать.',
   'outdatedProtocol': 'Прошивка использует старый протокол. Обновите её для полной работы приложения.',
   'slotsUsed': 'Слоты · занято {used}/8',
+  'groupFirmware': 'Прошивка',
+  'groupButtons': 'Кнопки',
+  'groupLed': 'Светодиоды',
+  'groupBluetooth': 'Bluetooth',
+  'groupPower': 'Питание',
+  'dangerZone': 'Опасная зона',
+  'press': 'нажатие',
+  'longPressSuffix': 'долгое нажатие',
+  'pairingRequired': 'Требовать сопряжение',
+  'pairingHint': 'Спрашивать PIN перед подключением телефона по BLE',
+  'notSupported': 'Не поддерживается этой прошивкой',
+  'enterDfuHint': 'Перезагрузка в режим обновления прошивки',
+  'flashLatestHint': 'Скачать и установить свежую прошивку',
+  'flashZipHint': 'Установить прошивку из .zip-файла',
+  'resetSettingsHint': 'Анимации, кнопки и BLE — по умолчанию',
+  'factoryResetHint': 'Стирает все слоты и настройки',
+  'seconds': 'с',
+  'ms': 'мс',
 };

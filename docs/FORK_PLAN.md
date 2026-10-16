@@ -24,7 +24,7 @@ https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4 — tick items as they land on
       View data, Save to library
 - [ ] Slot page: emulation options inline (today they are in upstream's Edit dialog, with Mfkey32)
 - [x] Card page: Load to slot button
-- [ ] Device settings as a grouped page (Firmware, Buttons, Display, Bluetooth, Power, Danger zone)
+- [x] Device settings as a grouped page (Firmware, Buttons, Display, Bluetooth, Power, Danger zone)
 
 ## 3. Scan tab
 - [ ] HF | LF switch with one Scan button; Continuous as a toggle

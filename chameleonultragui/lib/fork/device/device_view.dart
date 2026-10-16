@@ -1,10 +1,10 @@
 import 'package:chameleonultragui/connector/serial_abstract.dart';
+import 'package:chameleonultragui/fork/device/device_settings_page.dart';
 import 'package:chameleonultragui/fork/device/slot_page.dart';
 import 'package:chameleonultragui/fork/shell.dart';
 import 'package:chameleonultragui/fork/strings.dart';
 import 'package:chameleonultragui/fork/theme.dart';
 import 'package:chameleonultragui/generated/i18n/app_localizations.dart';
-import 'package:chameleonultragui/gui/menu/dialogs/chameleon_settings.dart';
 import 'package:chameleonultragui/helpers/definitions.dart';
 import 'package:chameleonultragui/helpers/flash.dart';
 import 'package:chameleonultragui/helpers/general.dart';
@@ -200,9 +200,10 @@ class _DeviceViewState extends State<DeviceView> {
                 menuChildren: [
                   MenuItemButton(
                     leadingIcon: const Icon(Icons.tune),
-                    onPressed: () => showDialog<void>(
-                      context: context,
-                      builder: (_) => const ChameleonSettings(),
+                    onPressed: () => pushDeviceRoute(
+                      context,
+                      'settings',
+                      const DeviceSettingsPage(),
                     ),
                     child: Text(localizations.device_settings),
                   ),
