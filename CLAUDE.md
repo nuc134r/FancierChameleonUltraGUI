@@ -1,7 +1,8 @@
 # FancierChameleonUltraGUI (fork)
 
 Fork of GameTec-live/ChameleonUltraGUI with a redesigned, phone-first UI. Flutter app in `chameleonultragui/`.
-The UX audit and plan: https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4
+The UX audit: https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4
+Work plan with progress: docs/FORK_PLAN.md — tick items when they land.
 
 ## Branches
 - `better-ui` — default branch with all fork work; base new work on it and merge back into it.
@@ -22,6 +23,7 @@ Upstream is merged into `better-ui` regularly, so:
 - `shell.dart` — bottom bar (Device, Scan, Library, Tools; rail at >= 840 dp), Settings gear, `pushDeviceRoute`
   (routes closed on disconnect). Upstream pages that are not redesigned yet are wrapped in `_LegacyPage`.
 - `theme.dart` — dark PCB-gold theme, `monoStyle` (RobotoMono for data only), `SectionLabel`, `EmptyState`.
+- `device/` — Device tab (offline/connect view).
 - `library/` — Library (Cards | Keys tabs), Card page (Info | Data | Keys), shared actions.
 
 ## Look

@@ -69,6 +69,15 @@ class ForkStrings {
   String get importRawTitle => _get('importRawTitle');
   String get importFailed => _get('importFailed');
   String get uidLength => _get('uidLength');
+  String get noDeviceFound => _get('noDeviceFound');
+  String get searchingHint => _get('searchingHint');
+  String get tryDemo => _get('tryDemo');
+  String get connectByPort => _get('connectByPort');
+  String get foundDevices => _get('foundDevices');
+  String get retry => _get('retry');
+  String get connectionFailed => _get('connectionFailed');
+  String get refresh => _get('refresh');
+  String get firmwareBroken => _get('firmwareBroken');
 
   String deleted(String name) => _get('deleted').replaceAll('{name}', name);
   String loadedToSlot(int slot) =>
@@ -150,6 +159,15 @@ const Map<String, String> _en = {
   'sectorLabel': 'SECTOR {sector} · blocks {first}–{last}',
   'pages': '{count} pages',
   'slotN': 'Slot {slot}',
+  'noDeviceFound': 'No Chameleon found',
+  'searchingHint': 'Plug it in over USB or switch it on for Bluetooth. Searching every few seconds.',
+  'tryDemo': 'Try demo mode',
+  'connectByPort': 'Connect by port',
+  'foundDevices': 'Found devices',
+  'retry': 'Try again',
+  'connectionFailed': 'Could not connect',
+  'refresh': 'Refresh',
+  'firmwareBroken': 'Needs firmware',
 };
 
 const Map<String, String> _ru = {
@@ -216,4 +234,13 @@ const Map<String, String> _ru = {
   'sectorLabel': 'СЕКТОР {sector} · блоки {first}–{last}',
   'pages': 'Страниц: {count}',
   'slotN': 'Слот {slot}',
+  'noDeviceFound': 'Chameleon не найден',
+  'searchingHint': 'Подключите его по USB или включите для Bluetooth. Поиск идёт каждые несколько секунд.',
+  'tryDemo': 'Демо-режим',
+  'connectByPort': 'Подключить по порту',
+  'foundDevices': 'Найденные устройства',
+  'retry': 'Повторить',
+  'connectionFailed': 'Не удалось подключиться',
+  'refresh': 'Обновить',
+  'firmwareBroken': 'Нужна прошивка',
 };

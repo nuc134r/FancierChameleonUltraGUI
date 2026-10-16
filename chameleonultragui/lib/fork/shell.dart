@@ -1,11 +1,10 @@
+import 'package:chameleonultragui/fork/device/connect_view.dart';
 import 'package:chameleonultragui/fork/library/library_page.dart';
 import 'package:chameleonultragui/fork/strings.dart';
 import 'package:chameleonultragui/fork/theme.dart';
-import 'package:chameleonultragui/gui/page/connect.dart';
 import 'package:chameleonultragui/gui/page/debug.dart';
 import 'package:chameleonultragui/gui/page/flashing.dart';
 import 'package:chameleonultragui/gui/page/home.dart';
-import 'package:chameleonultragui/gui/page/pending_connection.dart';
 import 'package:chameleonultragui/gui/page/read_card.dart';
 import 'package:chameleonultragui/gui/page/settings.dart';
 import 'package:chameleonultragui/gui/page/slot_manager.dart';
@@ -141,11 +140,8 @@ class _AppShellState extends State<AppShell> {
     final connector = appState.connector!;
     switch (tab) {
       case _Tab.device:
-        if (connector.pendingConnection) {
-          return const _LegacyPage(child: PendingConnectionPage());
-        }
         if (!connector.connected) {
-          return const _LegacyPage(child: ConnectPage());
+          return const DeviceOfflineView();
         }
         return _LegacyPage(
           actions: [
