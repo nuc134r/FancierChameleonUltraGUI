@@ -3,8 +3,13 @@
 Fork of GameTec-live/ChameleonUltraGUI with a redesigned, phone-first UI. Flutter app in `chameleonultragui/`.
 The UX audit and plan: https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4
 
+## Branches
+- `better-ui` — default branch with all fork work; base new work on it and merge back into it.
+- `main` — pure mirror of upstream's `main`. Never commit fork changes there; upstream comes into the fork
+  by merging `main` into `better-ui` (see docs/FORK_RELEASING.md).
+
 ## Stay mergeable with upstream
-The owner pulls from upstream (`git fetch upstream --no-tags && git merge upstream/main`), so:
+Upstream is merged into `better-ui` regularly, so:
 - Put new UI in **new files under `chameleonultragui/lib/fork/`**; reuse upstream pages, dialogs and helpers.
 - Keep edits to upstream files small and marked with a `// Fork:` comment. Current ones: `lib/main.dart`
   (MaterialApp uses the fork shell/theme), `lib/sharedprefsprovider.dart` (dark theme default),

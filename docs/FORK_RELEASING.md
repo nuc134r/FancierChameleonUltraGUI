@@ -66,7 +66,7 @@ fine for testing, not for real releases.
 
 ## Making a release
 
-1. Add a `## <version>` section to `FORK_CHANGELOG.md` (rename `## Unreleased`).
+1. On `better-ui`, add a `## <version>` section to `FORK_CHANGELOG.md` (rename `## Unreleased`).
 2. Tag and push:
 
    ```bash
@@ -74,7 +74,7 @@ fine for testing, not for real releases.
    git push origin v2.0.0
    ```
 
-   Or, without git: **Actions → Fork release APK → Run workflow** with *version* `2.0.0` — the
+   Or, without git: **Actions → Fork release APK → Run workflow** on `better-ui` with *version* `2.0.0` — the
    workflow tags the commit it built and publishes the release.
 
 3. The release *Chameleon 2.0.0* gets:
@@ -89,15 +89,24 @@ starting with `v` and a digit trigger the workflow, so upstream tags pulled into
 To build APKs **without** releasing, run the workflow with an empty version; the APKs are attached
 to the run as an artifact.
 
-## Pulling from upstream
+## Branches and pulling from upstream
+
+| Branch | Content |
+|---|---|
+| `better-ui` | **default branch**: the fork (redesigned UI, release workflow). Tag releases here. |
+| `main` | an untouched mirror of upstream's `main`; never commit fork changes to it. |
+
+Sync upstream, then bring it into the fork:
 
 ```bash
 git remote add upstream https://github.com/GameTec-live/ChameleonUltraGUI.git   # once
 git fetch upstream --no-tags
-git merge upstream/main
+git checkout main && git merge --ff-only upstream/main && git push origin main
+git checkout better-ui && git merge main && git push origin better-ui
 ```
 
-`--no-tags` keeps upstream's tags (e.g. its `dev` tag) out of the fork.
+`--no-tags` keeps upstream's tags (e.g. its `dev` tag) out of the fork. GitHub's **Sync fork**
+button on `main` does the first half too.
 
 ## Installing on the phone
 
