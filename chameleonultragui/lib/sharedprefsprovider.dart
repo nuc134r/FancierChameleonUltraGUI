@@ -410,7 +410,8 @@ class SharedPreferencesProvider extends ChangeNotifier {
   }
 
   ThemeMode getTheme() {
-    final themeValue = _sharedPreferences.getInt('app_theme') ?? 0;
+    // Fork: dark by default.
+    final themeValue = _sharedPreferences.getInt('app_theme') ?? 2;
     return ThemeMode.values[themeValue];
   }
 

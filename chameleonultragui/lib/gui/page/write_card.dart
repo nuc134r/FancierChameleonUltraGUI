@@ -15,7 +15,10 @@ import 'package:provider/provider.dart';
 import 'package:chameleonultragui/generated/i18n/app_localizations.dart';
 
 class WriteCardPage extends StatefulWidget {
-  const WriteCardPage({super.key});
+  // Fork: when set, the card is preselected and the wizard starts at the magic type step.
+  final CardSave? initialCard;
+
+  const WriteCardPage({super.key, this.initialCard});
 
   @override
   WriteCardPageState createState() => WriteCardPageState();
@@ -292,6 +295,15 @@ class WriteCardPageState extends State<WriteCardPage> {
   @override
   void initState() {
     super.initState();
+    // Fork: start with a card picked from the Card page.
+    final initial = widget.initialCard;
+    if (initial != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        await onTap(initial, (_, _) {}, AppLocalizations.of(context)!);
+        if (mounted) setState(() => step = 1);
+      });
+    }
   }
 
   @override
