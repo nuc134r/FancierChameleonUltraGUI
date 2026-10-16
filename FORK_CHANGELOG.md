@@ -3,6 +3,18 @@
 Release notes for this fork's GitHub releases. Each `## <version>` section becomes the notes of
 the release tagged `v<version>` (see docs/FORK_RELEASING.md). Upstream's history is in its own releases.
 
+## 2.1.0
+
+- Device tab without a Chameleon: explains how to connect, lists found devices with a Connect
+  button, offers demo mode; Bluetooth connecting shows inline.
+- Connected Device tab: status header (model, connection, battery, firmware), Emulate | Read switch,
+  firmware update banner, and the 8 slots as a list with the active one highlighted.
+- Slot page: HF and LF sides with on/off switch, Load from library, Edit, View data, Clear and
+  Save to library.
+- Card page: Load to slot.
+- Device settings as a full page grouped into Firmware, Buttons, LEDs, Bluetooth, Power and
+  Danger zone.
+
 ## 2.0.0
 
 - Android app id is now `io.nuc134r.chameleon`, so the fork installs next to the upstream app.
