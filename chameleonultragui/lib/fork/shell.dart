@@ -6,8 +6,8 @@ import 'package:chameleonultragui/fork/theme.dart';
 import 'package:chameleonultragui/gui/page/debug.dart';
 import 'package:chameleonultragui/gui/page/flashing.dart';
 import 'package:chameleonultragui/gui/page/read_card.dart';
-import 'package:chameleonultragui/gui/page/settings.dart';
-import 'package:chameleonultragui/gui/page/tools.dart';
+import 'package:chameleonultragui/fork/settings/settings_page.dart';
+import 'package:chameleonultragui/fork/tools/tools_page.dart';
 import 'package:chameleonultragui/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -166,7 +166,7 @@ class _AppShellState extends State<AppShell> {
       case _Tab.library:
         return const LibraryPage();
       case _Tab.tools:
-        return const _LegacyPage(child: ToolsPage());
+        return const ToolsPage();
     }
   }
 }
@@ -182,7 +182,7 @@ class SettingsButton extends StatelessWidget {
 
     void openSettings() =>
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => const SettingsMainPage()));
+            .push(MaterialPageRoute(builder: (_) => const SettingsPage()));
 
     if (!appState.devMode) {
       return IconButton(

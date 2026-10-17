@@ -3,6 +3,17 @@
 Release notes for this fork's GitHub releases. Each `## <version>` section becomes the notes of
 the release tagged `v<version>` (see docs/FORK_RELEASING.md). Upstream's history is in its own releases.
 
+## 2.2.0
+
+- Dictionary page: numbered, searchable key list (tap a key to copy it), editor that reports
+  skipped lines, merge other dictionaries in, rename, move, export, delete.
+- Card page: NDEF tab when the card holds an NDEF message; edit it from there.
+- Library: long-press cards to select several, then move or delete them together.
+- Settings rebuilt as a grouped list (Appearance, Connection, Library, Backup, About, Developer)
+  with an About page. The old sidebar setting is gone.
+- Tools tab: plain list with frequency tags; tools open almost full screen; the unfinished
+  Gen4 tool is hidden; dictionary download lives in Library › Keys.
+
 ## 2.1.0
 
 - Device tab without a Chameleon: explains how to connect, lists found devices with a Connect

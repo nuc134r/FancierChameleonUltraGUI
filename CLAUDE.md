@@ -25,7 +25,9 @@ Upstream is merged into `better-ui` regularly, so:
 - `theme.dart` — dark PCB-gold theme, `monoStyle` (RobotoMono for data only), `SectionLabel`, `EmptyState`.
 - `device/` — Device tab: offline/connect view, connected view with slots, Slot page, `loadCardToSlot`.
 - `library/card_picker.dart` — shared "pick a card" sheet.
-- `library/` — Library (Cards | Keys tabs), Card page (Info | Data | Keys), shared actions.
+- `library/` — Library (Cards | Keys tabs), Card page (Info | Data | Keys | NDEF), Dictionary page, shared actions,
+  save-to-library sheet.
+- `settings/` — grouped Settings page and About page. `tools/` — Tools list.
 
 ## Look
 Dark by default, PCB gold accent (#D9A93A), 6 px corners, monospace only for UIDs/keys/hex, uppercase mono

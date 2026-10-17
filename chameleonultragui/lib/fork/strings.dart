@@ -145,6 +145,24 @@ class ForkStrings {
   String selectedCount(int n) => _get('selectedCount').replaceAll('{n}', '$n');
   String deletedCount(int n) => _get('deletedCount').replaceAll('{n}', '$n');
   String get selectAll => _get('selectAll');
+  String get groupAppearance => _get('groupAppearance');
+  String get groupConnection => _get('groupConnection');
+  String get groupBackup => _get('groupBackup');
+  String get groupAbout => _get('groupAbout');
+  String get groupDeveloper => _get('groupDeveloper');
+  String get accent => _get('accent');
+  String get pcbGold => _get('pcbGold');
+  String get autoScanHint => _get('autoScanHint');
+  String get autoConnectHint => _get('autoConnectHint');
+  String get confirmDeleteHint => _get('confirmDeleteHint');
+  String get exportHint => _get('exportHint');
+  String get importHint => _get('importHint');
+  String get demoHint => _get('demoHint');
+  String get debugHint => _get('debugHint');
+  String get forkNote => _get('forkNote');
+  String get sourceCode => _get('sourceCode');
+  String get upstreamProject => _get('upstreamProject');
+
   String deleted(String name) => _get('deleted').replaceAll('{name}', name);
   String loadedToSlot(int slot) =>
       _get('loadedToSlot').replaceAll('{slot}', '$slot');
@@ -302,6 +320,23 @@ const Map<String, String> _en = {
   'selectedCount': '{n} selected',
   'deletedCount': 'Deleted {n} cards',
   'selectAll': 'Select all',
+  'groupAppearance': 'Appearance',
+  'groupConnection': 'Connection',
+  'groupBackup': 'Backup',
+  'groupAbout': 'About',
+  'groupDeveloper': 'Developer',
+  'accent': 'Accent colour',
+  'pcbGold': 'PCB gold',
+  'autoScanHint': 'Look for a Chameleon every few seconds',
+  'autoConnectHint': 'Connect to the first Chameleon found',
+  'confirmDeleteHint': 'Ask before deleting; Undo is always offered',
+  'exportHint': 'Cards, dictionaries and settings to a QR code or a file',
+  'importHint': 'Restore from a QR code or a file',
+  'demoHint': 'A fake Chameleon for trying the app',
+  'debugHint': 'Shows Debug tools under the gear menu',
+  'forkNote': 'This build is a fork with a redesigned interface.',
+  'sourceCode': 'Source code',
+  'upstreamProject': 'Original project',
 };
 
 const Map<String, String> _ru = {
@@ -446,4 +481,21 @@ const Map<String, String> _ru = {
   'selectedCount': 'Выбрано: {n}',
   'deletedCount': 'Удалено карт: {n}',
   'selectAll': 'Выбрать все',
+  'groupAppearance': 'Оформление',
+  'groupConnection': 'Подключение',
+  'groupBackup': 'Резервная копия',
+  'groupAbout': 'О приложении',
+  'groupDeveloper': 'Для разработчиков',
+  'accent': 'Цвет акцента',
+  'pcbGold': 'Золото платы',
+  'autoScanHint': 'Искать Chameleon каждые несколько секунд',
+  'autoConnectHint': 'Подключаться к первому найденному Chameleon',
+  'confirmDeleteHint': 'Спрашивать перед удалением; отмена доступна всегда',
+  'exportHint': 'Карты, словари и настройки в QR-код или файл',
+  'importHint': 'Восстановить из QR-кода или файла',
+  'demoHint': 'Ненастоящий Chameleon, чтобы попробовать приложение',
+  'debugHint': 'Показывает «Отладку» в меню шестерёнки',
+  'forkNote': 'Это сборка-форк с переработанным интерфейсом.',
+  'sourceCode': 'Исходный код',
+  'upstreamProject': 'Оригинальный проект',
 };

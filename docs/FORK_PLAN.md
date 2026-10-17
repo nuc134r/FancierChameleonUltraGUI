@@ -39,6 +39,8 @@ https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4 — tick items as they land on
 - [x] Long-press multi-select for cards (move, delete)
 
 ## 5. Tools, Settings, Debug
-- [ ] Tools open as pages (LF/HF sniffing, T55XX cleaner); hide Gen4 WIP
-- [ ] Settings as a grouped list (Appearance, Connection, Library, Backup, About, Developer)
+- [x] Tools tab as a plain list (frequency tags, device-required hint); Gen4 WIP hidden;
+      dictionary download moved to Library › Keys
+- [ ] Tools as real pages (today upstream's tool dialogs open almost full screen)
+- [x] Settings as a grouped list (Appearance, Connection, Library, Backup, About, Developer); About page
 - [ ] Debug tools page grouped, short warning banner
