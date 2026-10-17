@@ -17,6 +17,7 @@ Upstream is merged into `better-ui` regularly, so:
   `lib/gui/page/write_card.dart` (`initialCard`), `android/app/build.gradle` (`applicationId`).
 - Don't edit `lib/l10n/*.arb` (Crowdin-managed upstream). Fork strings go in `lib/fork/strings.dart`
   (en + ru, English fallback); reuse existing `AppLocalizations` keys where they fit.
+- `README.md` is fork-owned (screenshots in `docs/fork-screenshots/`); on merge conflicts keep ours.
 - Don't edit upstream workflows; fork CI is `.github/workflows/fork-release.yml` (see docs/FORK_RELEASING.md).
 
 ## Layout of lib/fork

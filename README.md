@@ -1,103 +1,94 @@
-# Chameleon Ultra GUI
-A GUI for the Chameleon Ultra/Chameleon Lite written in Flutter for cross platform operation
+# Fancier Chameleon Ultra GUI
 
-[![Auto build](https://github.com/GameTec-live/ChameleonUltraGUI/actions/workflows/build-app.yml/badge.svg)](https://github.com/GameTec-live/ChameleonUltraGUI/actions/workflows/build-app.yml) 
-[![Open collective](https://opencollective.com/chameleon-ultra-gui/tiers/badge.svg)](https://opencollective.com/chameleon-ultra-gui#support)
-[![Crowdin](https://badges.crowdin.net/chameleonultragui/localized.svg)](https://crowdin.com/project/chameleonultragui)
+A phone-first redesign of [Chameleon Ultra GUI](https://github.com/GameTec-live/ChameleonUltraGUI):
+the same app for the Chameleon Ultra / Lite, with a calmer, simpler interface. Dark by default,
+PCB gold accent, monospace only where the data is.
 
-### [Full documentation here](https://github.com/GameTec-live/ChameleonUltraGUI/tree/main/docs)
+<p>
+  <img src="docs/fork-screenshots/01-device.webp" width="200" alt="Device tab with status header and the 8 slots">
+  <img src="docs/fork-screenshots/06-library.webp" width="200" alt="Library with folders and cards">
+  <img src="docs/fork-screenshots/08-card-data.webp" width="200" alt="Card page, Data tab with the hex dump">
+  <img src="docs/fork-screenshots/05-scan-result.webp" width="200" alt="Scan tab with a read result">
+</p>
 
-## Installation
+## Download
 
-#### Windows
+Signed Android APKs are on the **[Releases](https://github.com/nuc134r/FancierChameleonUltraGUI/releases/latest)** page.
+Take `chameleon-<version>-arm64-v8a.apk` for most phones, or the universal `chameleon-<version>.apk`.
+The app installs next to the original one (`io.nuc134r.chameleon`).
 
-Download the installer [here](https://github.com/GameTec-live/ChameleonUltraGUI/releases/download/dev/windows-installer.zip)
+## What's different
 
-Or, [portable version](https://github.com/GameTec-live/ChameleonUltraGUI/releases/download/dev/windows.zip)
+Four tabs at the bottom instead of a side rail, pages instead of stacked dialogs, one ⋮ menu instead
+of rows of icons.
 
+### Device
 
-#### Linux
+Status at a glance, an Emulate | Read switch and all 8 slots in one list. Tap a slot to load a card
+from the library, edit it, view its data or switch a side off. Device settings are a normal grouped
+page.
 
-Download the Linux build
+<p>
+  <img src="docs/fork-screenshots/01-device.webp" width="200" alt="Device tab">
+  <img src="docs/fork-screenshots/02-slot.webp" width="200" alt="Slot page with HF and LF sides">
+  <img src="docs/fork-screenshots/03-device-settings.webp" width="200" alt="Device settings page">
+</p>
 
-- [Debian-based (.deb)](https://github.com/GameTec-live/ChameleonUltraGUI/releases/download/dev/linux-debian.zip)
-- [Arch-based](https://aur.archlinux.org/packages/chameleonultragui-git)
-- [Other](https://github.com/GameTec-live/ChameleonUltraGUI/releases/download/dev/linux.zip)
-- [Other (legacy, built on Ubuntu 20.04 LTS)](https://github.com/GameTec-live/ChameleonUltraGUI/releases/download/dev/linux-legacy.zip)
-- [Flathub (Not built in our CI, updates may be slower)](https://flathub.org/apps/run.chameleon.chameleonultragui)
+### Library
 
-#### macOS / iOS / iPadOS
+Cards and key dictionaries in two tabs, one full-height list each, with search, an HF/LF filter,
+folders and long-press multi-select. A card opens on its own page: identifiers, the dump (hex or
+ASCII), the keys of every sector and NDEF records, with **Load to slot** and **Write to tag** at the
+bottom.
 
-Download it from Apple App Store: [Chameleon Ultra GUI](https://apps.apple.com/app/chameleon-ultra-gui/id6462919364)
+<p>
+  <img src="docs/fork-screenshots/06-library.webp" width="200" alt="Library, Cards tab">
+  <img src="docs/fork-screenshots/07-card-info.webp" width="200" alt="Card page, Info tab">
+  <img src="docs/fork-screenshots/09-card-keys.webp" width="200" alt="Card page, Keys tab">
+  <img src="docs/fork-screenshots/10-card-ndef.webp" width="200" alt="Card page, NDEF tab">
+</p>
 
-Or, you can join TestFlight to get builds earlier: [Chameleon Ultra GUI - TestFlight](https://testflight.apple.com/join/UgwgfMqo)
+<p>
+  <img src="docs/fork-screenshots/11-keys.webp" width="200" alt="Library, Keys tab">
+  <img src="docs/fork-screenshots/12-dictionary.webp" width="200" alt="Dictionary page with numbered keys">
+</p>
 
-#### Android
+### Scan
 
-Download it from Google Play Store: [Chameleon Ultra GUI](https://play.google.com/store/apps/details?id=io.chameleon.ultra)
+Pick HF or LF, press Scan. The result shows the card type and identifiers you can tap to copy, and
+saves to the library in one step.
 
-Or, plain [APK](https://github.com/GameTec-live/ChameleonUltraGUI/releases/download/dev/apk.zip) (not signed, incompatible with Google Play version)
+<p>
+  <img src="docs/fork-screenshots/04-scan-idle.webp" width="200" alt="Scan tab waiting for a card">
+  <img src="docs/fork-screenshots/05-scan-result.webp" width="200" alt="Scan result">
+</p>
 
-#### Pending stores:
-- F-Store: not yet
-- Chocolatey (Windows): not yet
+### Tools and Settings
 
-Note: Under some Linux systems, especially ones running KDE desktop environments, you may need to install the `zenity` package for the file picker to work correctly.
+<p>
+  <img src="docs/fork-screenshots/13-tools.webp" width="200" alt="Tools list">
+  <img src="docs/fork-screenshots/14-settings.webp" width="200" alt="Settings page">
+</p>
 
-Key:
-- apk: Android APK, download and install either via ADB or your app/file manager of choice
-- linux: zip file containing the linux build, either run the binary manually or install using cmake
-- linux-legacy: same as `linux`, but built on Ubuntu 20.04 LTS. Suited for users on old glibc
-- linux-debian: Debian Auto Packaging, download and install with dpkg or apt
-- windows: zip file containing windows build, run the binary manually
-- windows-installer: NSIS based Windows Installer, Installs the Windows build and creates Shortcuts
+### Empty screens
 
-#### Note for Linux users:
-You might need to add your user to the `dialout` or, on Arch Linux, to the `uucp` group for the app to talk to the device. If your user is not in this group, you may get serial or permission errors.
-It is also highly recommended to either uninstall or disable ModemManager (`sudo systemctl disable --now modemmanager`) as many distros ship ModemManager and it may interfere with communication.
+No blank pages: every empty state says what to do next.
 
-## Buy a Chameleon Ultra
-- [Sneak Tech](https://sneaktechnology.com/product/chameleon-ultra/)
-- [KSEC](https://labs.ksec.co.uk/product/proxgrind-chameleon-ultra/)
-- [Lab401](https://lab401.com/products/chameleon-ultra)
+<p>
+  <img src="docs/fork-screenshots/20-empty-device.webp" width="200" alt="No Chameleon found">
+  <img src="docs/fork-screenshots/21-empty-scan.webp" width="200" alt="Scan without a device">
+  <img src="docs/fork-screenshots/22-empty-library.webp" width="200" alt="No cards yet">
+  <img src="docs/fork-screenshots/23-empty-keys.webp" width="200" alt="No dictionaries yet">
+</p>
 
-## Contributing
-Contributions are welcome, most stuff that needs to be done can either be found in our [issues](https://github.com/GameTec-live/ChameleonUltraGUI/issues) or on the [Project board](https://github.com/users/GameTec-live/projects/2)
+## About this fork
 
-### Special thanks to [St.Ricky](https://github.com/Saint-Ricky) for designing the App icons
+Built on top of the original app, which keeps doing the heavy lifting: device protocol, card
+reading, key recovery, sniffing and firmware updates. This fork only changes the interface and
+follows upstream closely. Screenshots use the built-in demo device, so names and values are fake.
 
-## Translations
+Bugs in the redesigned screens belong here; everything else is best reported
+[upstream](https://github.com/GameTec-live/ChameleonUltraGUI/issues).
 
-If you want to collaborate by adding your language to the application, you can do it through [our Crowdin project](https://crowdin.com/project/chameleonultragui). Do not contribute files into `chameleonultragui/lib/l10n/app_*.arb`. All translations should be added only to Crowdin. If your language is missing, you can create issue and ask to enable it. "Chameleon Ultra GUI", "Chameleon" and other trademarks should not be translated.
-
-## Screenshots
-![Connect Page](/screenshots/1.png)
-![Home Page](/screenshots/2.png)
-![Home Page Settings](/screenshots/3.png)
-![Slot Manager Page](/screenshots/4.png)
-![Slot Manager Saved Cards](/screenshots/5.png)
-![Saved Cards Page](/screenshots/6.png)
-![Read Card Page](/screenshots/7.png)
-![Read Card Page Mifare Classic](/screenshots/8.png)
-
-## Donate
-You want to support us and donate? Thank you, you make it possible for us to keep this app free and make it easier to publish this app on the Apple App Store.
-
-You have the following options:
-
-Open Collective: [Chameleon Ultra GUI](https://opencollective.com/chameleon-ultra-gui)
-
-Crypto Currencies if your into that jam (Although open collective is preferred):
-- BTC: bc1qrcd4ctxagaxsetyhpzc08d2upl0mh498gp3lkl
-- ETH: 0x0f20e505E9e534236dF4390DcFfD5C4A03C0eec7
-
-
-## Star History
-
-<a href="https://star-history.dera.page/#GameTec-live/ChameleonUltraGUI&type=date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=GameTec-live/ChameleonUltraGUI&type=Timeline&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=GameTec-live/ChameleonUltraGUI&type=Timeline" />
-    <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=GameTec-live/ChameleonUltraGUI&type=Timeline" />
-  </picture>
-</a>
+For installation on other platforms, the full feature list, documentation and credits, see the
+**[original README](https://github.com/GameTec-live/ChameleonUltraGUI#readme)**.
