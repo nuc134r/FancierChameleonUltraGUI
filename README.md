@@ -62,7 +62,7 @@ bottom.
 
 ### Scan
 
-Pick HF or LF, press Scan. The result shows the card type and identifiers you can tap to copy, and
+Pick HF or LF and press Scan; both sit at the bottom, within thumb reach. The result shows the card type and identifiers you can tap to copy, and
 saves to the library in one step.
 
 <table>

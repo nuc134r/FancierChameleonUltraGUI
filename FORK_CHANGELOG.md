@@ -3,6 +3,11 @@
 Release notes for this fork's GitHub releases. Each `## <version>` section becomes the notes of
 the release tagged `v<version>` (see docs/FORK_RELEASING.md). Upstream's history is in its own releases.
 
+## 2.3.3
+
+- Scan tab: the HF | LF switch and the Scan / Keep scanning buttons sit at the bottom, above the
+  tab bar, within thumb reach. Results scroll above them.
+
 ## 2.3.2
 
 - Device tab: the Emulate | Read switch is now a small mode icon in the header. Tapping it opens a

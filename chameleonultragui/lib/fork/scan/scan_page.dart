@@ -274,75 +274,88 @@ class _ScanPageState extends State<ScanPage> {
               title: localizations.no_supported,
               hint: localizations.lite_no_read,
             )
-          : ListView(
-              padding: const EdgeInsets.only(bottom: 24),
+          : Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                  child: SegmentedButton<bool>(
-                    showSelectedIcon: false,
-                    style: SegmentedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(44),
+                Expanded(
+                  child:
+                      _emptyState(context) ??
+                      ListView(
+                        padding: const EdgeInsets.only(bottom: 24),
+                        children: _result(context),
+                      ),
+                ),
+                _ControlsBar(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                      child: SegmentedButton<bool>(
+                        showSelectedIcon: false,
+                        style: SegmentedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(44),
+                        ),
+                        segments: const [
+                          ButtonSegment(
+                            value: false,
+                            label: Text('HF · 13.56 MHz'),
+                          ),
+                          ButtonSegment(
+                            value: true,
+                            label: Text('LF · 125 kHz'),
+                          ),
+                        ],
+                        selected: {lf},
+                        onSelectionChanged: scanning
+                            ? null
+                            : (v) => setState(() {
+                                lf = v.first;
+                                _clear();
+                              }),
+                      ),
                     ),
-                    segments: const [
-                      ButtonSegment(
-                        value: false,
-                        label: Text('HF · 13.56 MHz'),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: FilledButton.icon(
+                              style: FilledButton.styleFrom(
+                                minimumSize: const Size.fromHeight(48),
+                              ),
+                              onPressed: scanning ? null : _scan,
+                              icon: const Icon(Icons.sensors),
+                              label: Text(
+                                hf != null || lfCard != null
+                                    ? strings.scanAgain
+                                    : strings.scanAction,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: const Size.fromHeight(48),
+                              ),
+                              onPressed: busy && timer == null
+                                  ? null
+                                  : _toggleKeepScanning,
+                              icon: Icon(
+                                timer != null
+                                    ? Icons.stop_circle_outlined
+                                    : Icons.autorenew,
+                              ),
+                              label: Text(
+                                timer != null
+                                    ? strings.stopScanning
+                                    : strings.keepScanning,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      ButtonSegment(value: true, label: Text('LF · 125 kHz')),
-                    ],
-                    selected: {lf},
-                    onSelectionChanged: scanning
-                        ? null
-                        : (v) => setState(() {
-                            lf = v.first;
-                            _clear();
-                          }),
-                  ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: FilledButton.icon(
-                          style: FilledButton.styleFrom(
-                            minimumSize: const Size.fromHeight(48),
-                          ),
-                          onPressed: scanning ? null : _scan,
-                          icon: const Icon(Icons.sensors),
-                          label: Text(
-                            hf != null || lfCard != null
-                                ? strings.scanAgain
-                                : strings.scanAction,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(48),
-                          ),
-                          onPressed: busy && timer == null
-                              ? null
-                              : _toggleKeepScanning,
-                          icon: Icon(
-                            timer != null
-                                ? Icons.stop_circle_outlined
-                                : Icons.autorenew,
-                          ),
-                          label: Text(
-                            timer != null
-                                ? strings.stopScanning
-                                : strings.keepScanning,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ..._result(context),
               ],
             ),
     );
@@ -351,17 +364,6 @@ class _ScanPageState extends State<ScanPage> {
   List<Widget> _result(BuildContext context) {
     final strings = ForkStrings.of(context);
     final localizations = AppLocalizations.of(context)!;
-
-    if (notFound && timer == null) {
-      return [
-        const SizedBox(height: 40),
-        EmptyState(
-          icon: Icons.search_off,
-          title: localizations.no_card_found,
-          hint: strings.tryAnotherCard,
-        ),
-      ];
-    }
 
     if (lf && lfCard != null) {
       final card = lfCard!;
@@ -441,15 +443,53 @@ class _ScanPageState extends State<ScanPage> {
       ];
     }
 
-    if (timer != null || busy) return const [];
-    return [
-      const SizedBox(height: 40),
-      EmptyState(
-        icon: Icons.contactless_outlined,
-        title: strings.holdCard,
-        hint: lf ? strings.holdCardLf : strings.holdCardHf,
+    return const [];
+  }
+
+  // "No card found" and "hold a card", centred above the controls; null when there is a result.
+  Widget? _emptyState(BuildContext context) {
+    final strings = ForkStrings.of(context);
+    final localizations = AppLocalizations.of(context)!;
+    if (notFound && timer == null) {
+      return EmptyState(
+        icon: Icons.search_off,
+        title: localizations.no_card_found,
+        hint: strings.tryAnotherCard,
+      );
+    }
+    if ((lf && lfCard != null) || (!lf && hf != null)) return null;
+    if (timer != null || busy) return const SizedBox.shrink();
+    return EmptyState(
+      icon: Icons.contactless_outlined,
+      title: strings.holdCard,
+      hint: lf ? strings.holdCardLf : strings.holdCardHf,
+    );
+  }
+}
+
+// Frequency switch and Scan buttons, pinned above the tab bar within thumb reach.
+class _ControlsBar extends StatelessWidget {
+  final List<Widget> children;
+
+  const _ControlsBar({required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerLow,
+        border: Border(top: BorderSide(color: scheme.outlineVariant)),
       ),
-    ];
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: children,
+        ),
+      ),
+    );
   }
 }
 
