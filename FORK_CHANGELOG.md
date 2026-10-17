@@ -3,6 +3,12 @@
 Release notes for this fork's GitHub releases. Each `## <version>` section becomes the notes of
 the release tagged `v<version>` (see docs/FORK_RELEASING.md). Upstream's history is in its own releases.
 
+## 2.3.2
+
+- Device tab: the Emulate | Read switch is now a small mode icon in the header. Tapping it opens a
+  sheet that explains both modes and switches between them.
+- "No Chameleon found" no longer offers demo mode (it stays in Settings › Developer).
+
 ## 2.3.1
 
 - Library card list shows only the card type under the name (no UID). Search still finds cards

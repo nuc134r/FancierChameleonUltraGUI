@@ -71,7 +71,6 @@ class ForkStrings {
   String get uidLength => _get('uidLength');
   String get noDeviceFound => _get('noDeviceFound');
   String get searchingHint => _get('searchingHint');
-  String get tryDemo => _get('tryDemo');
   String get connectByPort => _get('connectByPort');
   String get foundDevices => _get('foundDevices');
   String get retry => _get('retry');
@@ -79,6 +78,10 @@ class ForkStrings {
   String get refresh => _get('refresh');
   String get firmwareBroken => _get('firmwareBroken');
   String get modeEmulate => _get('modeEmulate');
+  String get deviceMode => _get('deviceMode');
+  String get modeEmulateHint => _get('modeEmulateHint');
+  String get modeReadHint => _get('modeReadHint');
+  String get modeAutoHint => _get('modeAutoHint');
   String get modeRead => _get('modeRead');
   String get active => _get('active');
   String get setActive => _get('setActive');
@@ -251,7 +254,6 @@ const Map<String, String> _en = {
   'slotN': 'Slot {slot}',
   'noDeviceFound': 'No Chameleon found',
   'searchingHint': 'Plug it in over USB or switch it on for Bluetooth. Searching every few seconds.',
-  'tryDemo': 'Try demo mode',
   'connectByPort': 'Connect by port',
   'foundDevices': 'Found devices',
   'retry': 'Try again',
@@ -260,6 +262,10 @@ const Map<String, String> _en = {
   'firmwareBroken': 'Needs firmware',
   'modeEmulate': 'Emulate',
   'modeRead': 'Read',
+  'deviceMode': 'Device mode',
+  'modeEmulateHint': 'Acts as the card in the active slot. Hold it to a door or reader. The buttons switch slots.',
+  'modeReadHint': 'Acts as a reader: reads cards held to it. Readers around it see nothing.',
+  'modeAutoHint': 'Switches by itself: Scan and Write to tag use Read, loading a card into a slot goes back to Emulate.',
   'active': 'Active',
   'setActive': 'Set as active',
   'loadCard': 'Load card…',
@@ -417,7 +423,6 @@ const Map<String, String> _ru = {
   'slotN': 'Слот {slot}',
   'noDeviceFound': 'Chameleon не найден',
   'searchingHint': 'Подключите его по USB или включите для Bluetooth. Поиск идёт каждые несколько секунд.',
-  'tryDemo': 'Демо-режим',
   'connectByPort': 'Подключить по порту',
   'foundDevices': 'Найденные устройства',
   'retry': 'Повторить',
@@ -426,6 +431,10 @@ const Map<String, String> _ru = {
   'firmwareBroken': 'Нужна прошивка',
   'modeEmulate': 'Эмуляция',
   'modeRead': 'Чтение',
+  'deviceMode': 'Режим устройства',
+  'modeEmulateHint': 'Работает как карта из активного слота. Поднесите к двери или считывателю. Кнопки переключают слоты.',
+  'modeReadHint': 'Работает как считыватель: читает поднесённые карты. Считыватели вокруг его не видят.',
+  'modeAutoHint': 'Переключается сам: сканирование и запись на метку включают чтение, загрузка карты в слот — эмуляцию.',
   'active': 'Активен',
   'setActive': 'Сделать активным',
   'loadCard': 'Загрузить карту…',

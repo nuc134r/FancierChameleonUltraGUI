@@ -14,9 +14,10 @@ https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4 — tick items as they land on
 
 ## 2. Device tab
 - [x] Offline state: "No device" empty state with found devices as rows (model, USB/BLE, port, DFU),
-      Connect per row, live scanning indicator, Refresh, manual port connect in ⋮, demo-mode hint
+      Connect per row, live scanning indicator, Refresh, manual port connect in ⋮
 - [x] BLE "connecting" state inline (no separate page)
-- [x] Connected header: model, connection, battery, firmware version, Emulate | Read switch,
+- [x] Connected header: model, connection, battery, firmware version, Emulate / Read mode icon
+      (sheet with a hint per mode),
       ⋮ with Disconnect, Device settings, Check for firmware update
 - [x] Slots as a list of 8 rows (HF/LF card names, active slot highlighted); tap opens Slot page,
       ⋮ / long-press sets it active

@@ -225,16 +225,6 @@ class _DeviceOfflineViewState extends State<DeviceOfflineView> {
     );
   }
 
-  void enableDemo() {
-    final state = appState;
-    state.sharedPreferencesProvider.setEmulatedChameleon(true);
-    state.connector = null;
-    state.changesMade();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) scanNow();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final state = context.watch<ChameleonGUIState>();
@@ -324,13 +314,6 @@ class _DeviceOfflineViewState extends State<DeviceOfflineView> {
         icon: Icons.usb_off,
         title: strings.noDeviceFound,
         hint: strings.searchingHint,
-        action: state.sharedPreferencesProvider.isEmulatedChameleon()
-            ? null
-            : OutlinedButton.icon(
-                onPressed: enableDemo,
-                icon: const Icon(Icons.science_outlined),
-                label: Text(strings.tryDemo),
-              ),
       );
     }
 

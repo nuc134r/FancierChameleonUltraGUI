@@ -26,13 +26,15 @@ of rows of icons.
 
 ### Device
 
-Status at a glance, an Emulate | Read switch and all 8 slots in one list. Tap a slot to load a card
-from the library, edit it, view its data or switch a side off. Device settings are a normal grouped
-page.
+Status at a glance and all 8 slots in one list. The small icon in the corner shows whether the
+Chameleon is emulating a card or reading one; tap it to see what each mode does and switch. Tap a slot
+to load a card from the library, edit it, view its data or switch a side off. Device settings are a
+normal grouped page.
 
 <table>
   <tr>
     <td><img src="docs/fork-screenshots/01-device.webp" width="200" alt="Device tab"></td>
+    <td><img src="docs/fork-screenshots/02b-device-mode.webp" width="200" alt="Device mode sheet: Emulate or Read"></td>
     <td><img src="docs/fork-screenshots/02-slot.webp" width="200" alt="Slot page with HF and LF sides"></td>
     <td><img src="docs/fork-screenshots/03-device-settings.webp" width="200" alt="Device settings page"></td>
   </tr>

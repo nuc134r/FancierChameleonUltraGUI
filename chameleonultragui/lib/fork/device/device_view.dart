@@ -53,7 +53,7 @@ class _DeviceStatus {
   );
 }
 
-// Device tab while connected: status header, Emulate | Read switch and the 8 slots.
+// Device tab while connected: status header with the mode icon, and the 8 slots.
 class DeviceView extends StatefulWidget {
   const DeviceView({super.key});
 
@@ -127,6 +127,15 @@ class _DeviceViewState extends State<DeviceView> {
       reader,
     );
     reload();
+  }
+
+  Future<void> _showModeSheet(bool readerMode) async {
+    final reader = await showModalBottomSheet<bool>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) => _ModeSheet(readerMode: readerMode),
+    );
+    if (reader != null && reader != readerMode) await _setReaderMode(reader);
   }
 
   Future<void> _setActive(int slot) async {
@@ -323,6 +332,10 @@ class _DeviceViewState extends State<DeviceView> {
                   ],
                 ),
               ),
+              _ModeButton(
+                readerMode: data.readerMode,
+                onPressed: () => _showModeSheet(data.readerMode),
+              ),
             ],
           ),
         ),
@@ -339,29 +352,6 @@ class _DeviceViewState extends State<DeviceView> {
               child: Text(localizations.update),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-          child: SegmentedButton<bool>(
-            showSelectedIcon: false,
-            style: SegmentedButton.styleFrom(
-              minimumSize: const Size.fromHeight(44),
-            ),
-            segments: [
-              ButtonSegment(
-                value: false,
-                icon: const Icon(Icons.contactless_outlined),
-                label: Text(strings.modeEmulate),
-              ),
-              ButtonSegment(
-                value: true,
-                icon: const Icon(Icons.barcode_reader),
-                label: Text(strings.modeRead),
-              ),
-            ],
-            selected: {data.readerMode},
-            onSelectionChanged: (value) => _setReaderMode(value.first),
-          ),
-        ),
         SectionLabel(strings.slotsUsed(used)),
         for (var i = 0; i < 8; i++)
           _SlotRow(
@@ -375,6 +365,164 @@ class _DeviceViewState extends State<DeviceView> {
             onSetActive: () => _setActive(i),
           ),
       ],
+    );
+  }
+}
+
+IconData _modeIcon(bool readerMode) =>
+    readerMode ? Icons.barcode_reader : Icons.contactless_outlined;
+
+// Small Emulate / Read status icon in the header; opens the mode sheet.
+class _ModeButton extends StatelessWidget {
+  final bool readerMode;
+  final VoidCallback onPressed;
+
+  const _ModeButton({required this.readerMode, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = ForkStrings.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    return Tooltip(
+      message:
+          '${strings.deviceMode}: '
+          '${readerMode ? strings.modeRead : strings.modeEmulate}',
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(6),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: scheme.outlineVariant),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(_modeIcon(readerMode), size: 20, color: scheme.primary),
+              const SizedBox(height: 2),
+              Text(
+                (readerMode ? strings.modeRead : strings.modeEmulate)
+                    .toUpperCase(),
+                style: monoStyle(
+                  context,
+                  size: 9,
+                  color: scheme.onSurfaceVariant,
+                ).copyWith(letterSpacing: 0.8),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Explains the two modes and lets the user pick one; pops with the choice.
+class _ModeSheet extends StatelessWidget {
+  final bool readerMode;
+
+  const _ModeSheet({required this.readerMode});
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = ForkStrings.of(context);
+    final scheme = Theme.of(context).colorScheme;
+
+    Widget option(bool reader, String title, String hint) {
+      final selected = reader == readerMode;
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+        child: Material(
+          color: selected
+              ? scheme.primary.withValues(alpha: 0.08)
+              : Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6),
+            side: BorderSide(
+              color: selected ? scheme.primary : scheme.outlineVariant,
+            ),
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(6),
+            onTap: () => Navigator.pop(context, reader),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    _modeIcon(reader),
+                    color: selected ? scheme.primary : scheme.onSurfaceVariant,
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          hint,
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: scheme.onSurfaceVariant),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (selected)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Icon(Icons.check, color: scheme.primary),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+            child: Text(
+              strings.deviceMode,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          option(false, strings.modeEmulate, strings.modeEmulateHint),
+          option(true, strings.modeRead, strings.modeReadHint),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  size: 16,
+                  color: scheme.onSurfaceVariant,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    strings.modeAutoHint,
+                    style: Theme.of(context).textTheme.bodySmall
+                        ?.copyWith(color: scheme.onSurfaceVariant),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
