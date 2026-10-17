@@ -21,13 +21,14 @@ Upstream is merged into `better-ui` regularly, so:
 
 ## Layout of lib/fork
 - `shell.dart` — bottom bar (Device, Scan, Library, Tools; rail at >= 840 dp), Settings gear, `pushDeviceRoute`
-  (routes closed on disconnect). Upstream pages that are not redesigned yet are wrapped in `_LegacyPage`.
+  (routes closed on disconnect).
 - `theme.dart` — dark PCB-gold theme, `monoStyle` (RobotoMono for data only), `SectionLabel`, `EmptyState`.
 - `device/` — Device tab: offline/connect view, connected view with slots, Slot page, `loadCardToSlot`.
 - `library/card_picker.dart` — shared "pick a card" sheet.
 - `library/` — Library (Cards | Keys tabs), Card page (Info | Data | Keys | NDEF), Dictionary page, shared actions,
   save-to-library sheet.
-- `settings/` — grouped Settings page and About page. `tools/` — Tools list.
+- `settings/` — grouped Settings page and About page. `tools/` — Tools list. `scan/` — Scan tab (embeds upstream's
+  MifareClassicHelper / MifareUltralightHelper panels for the card-specific steps).
 
 ## Look
 Dark by default, PCB gold accent (#D9A93A), 6 px corners, monospace only for UIDs/keys/hex, uppercase mono

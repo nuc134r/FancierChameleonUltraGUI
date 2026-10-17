@@ -27,10 +27,11 @@ https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4 — tick items as they land on
 - [x] Device settings as a grouped page (Firmware, Buttons, Display, Bluetooth, Power, Danger zone)
 
 ## 3. Scan tab
-- [ ] HF | LF switch with one Scan button; Continuous as a toggle
-- [ ] Result card: type headline, mono UID/SAK/ATQA/ATS with copy, PRNG/backdoor chips
-- [ ] MIFARE Classic steps: Keys → Recover → Dump, one bottom primary button per state
-- [ ] Save to library sheet (name prefilled, folder, colour)
+- [x] HF | LF switch with one Scan button; Keep scanning as a toggle
+- [x] Result card: type headline, mono UID/SAK/ATQA/ATS with copy, PRNG/backdoor chips; card type override in ⋮
+- [x] MIFARE Classic / Ultralight steps: upstream's own panels shown under the result (kept as-is;
+      the fork does not reimplement key recovery)
+- [x] Save to library sheet (name prefilled, folder, colour) for UID-only and LF saves
 
 ## 4. Library follow-ups
 - [x] Dictionary page (view + edit merged; search, line numbers, merge into…)

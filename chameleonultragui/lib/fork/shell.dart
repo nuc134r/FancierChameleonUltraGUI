@@ -5,7 +5,7 @@ import 'package:chameleonultragui/fork/strings.dart';
 import 'package:chameleonultragui/fork/theme.dart';
 import 'package:chameleonultragui/gui/page/debug.dart';
 import 'package:chameleonultragui/gui/page/flashing.dart';
-import 'package:chameleonultragui/gui/page/read_card.dart';
+import 'package:chameleonultragui/fork/scan/scan_page.dart';
 import 'package:chameleonultragui/fork/settings/settings_page.dart';
 import 'package:chameleonultragui/fork/tools/tools_page.dart';
 import 'package:chameleonultragui/main.dart';
@@ -162,7 +162,7 @@ class _AppShellState extends State<AppShell> {
             ),
           );
         }
-        return const _LegacyPage(child: ReadCardPage());
+        return const ScanPage();
       case _Tab.library:
         return const LibraryPage();
       case _Tab.tools:
@@ -212,33 +212,6 @@ class SettingsButton extends StatelessWidget {
         onPressed: () =>
             controller.isOpen ? controller.close() : controller.open(),
       ),
-    );
-  }
-}
-
-// Upstream pages build their own Scaffold and AppBar (title only). Rather than editing each of
-// them, the shell lays its top-bar actions over the right end of that AppBar.
-class _LegacyPage extends StatelessWidget {
-  final Widget child;
-
-  const _LegacyPage({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final top = MediaQuery.paddingOf(context).top;
-    return Stack(
-      children: [
-        Positioned.fill(child: child),
-        Positioned(
-          top: top,
-          right: 4,
-          height: kToolbarHeight,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [SettingsButton()],
-          ),
-        ),
-      ],
     );
   }
 }
