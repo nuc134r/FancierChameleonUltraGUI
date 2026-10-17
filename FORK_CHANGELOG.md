@@ -3,6 +3,15 @@
 Release notes for this fork's GitHub releases. Each `## <version>` section becomes the notes of
 the release tagged `v<version>` (see docs/FORK_RELEASING.md). Upstream's history is in its own releases.
 
+## 2.3.0
+
+- Scan tab rebuilt: HF | LF switch, Scan and Keep scanning buttons, a clear "hold a card" and
+  "no card found" state, and the result with type, PRNG / backdoor / EV1 chips and copyable
+  UID, SAK, ATQA and ATS. Card type override is in ⋮. MIFARE Classic and Ultralight keep their
+  existing key / dump panels under the result.
+- Save to library sheet with a prefilled name, folder and colour.
+- Card form page replaces the Create card and Edit card dialogs.
+
 ## 2.2.0
 
 - Dictionary page: numbered, searchable key list (tap a key to copy it), editor that reports
