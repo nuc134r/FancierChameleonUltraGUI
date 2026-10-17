@@ -34,7 +34,7 @@ https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4 — tick items as they land on
 
 ## 4. Library follow-ups
 - [x] Dictionary page (view + edit merged; search, line numbers, merge into…)
-- [ ] Card form page replacing the Create / Edit card dialogs
+- [x] Card form page replacing the Create / Edit card dialogs
 - [x] NDEF tab on the Card page
 - [x] Long-press multi-select for cards (move, delete)
 

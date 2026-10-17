@@ -1,10 +1,10 @@
 import 'package:chameleonultragui/fork/device/slot_page.dart';
+import 'package:chameleonultragui/fork/library/card_form_page.dart';
 import 'package:chameleonultragui/fork/library/library_actions.dart';
 import 'package:chameleonultragui/fork/shell.dart';
 import 'package:chameleonultragui/fork/strings.dart';
 import 'package:chameleonultragui/fork/theme.dart';
 import 'package:chameleonultragui/generated/i18n/app_localizations.dart';
-import 'package:chameleonultragui/gui/menu/dialogs/card/edit.dart';
 import 'package:chameleonultragui/gui/menu/dialogs/dictionary/export.dart';
 import 'package:chameleonultragui/gui/menu/pages/dump_editor.dart';
 import 'package:chameleonultragui/gui/page/write_card.dart';
@@ -178,10 +178,7 @@ class _CardPageState extends State<CardPage> with TickerProviderStateMixin {
             IconButton(
               tooltip: strings.edit,
               icon: const Icon(Icons.edit_outlined),
-              onPressed: () => showDialog(
-                context: context,
-                builder: (_) => CardEditMenu(tagSave: card),
-              ),
+              onPressed: () => openCardForm(context, card: card),
             ),
           MenuAnchor(
             menuChildren: [

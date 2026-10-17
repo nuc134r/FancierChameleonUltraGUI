@@ -1,3 +1,4 @@
+import 'package:chameleonultragui/fork/library/card_form_page.dart';
 import 'package:chameleonultragui/fork/library/card_page.dart';
 import 'package:chameleonultragui/fork/library/dictionary_page.dart';
 import 'package:chameleonultragui/fork/library/library_actions.dart';
@@ -5,7 +6,6 @@ import 'package:chameleonultragui/fork/shell.dart';
 import 'package:chameleonultragui/fork/strings.dart';
 import 'package:chameleonultragui/fork/theme.dart';
 import 'package:chameleonultragui/generated/i18n/app_localizations.dart';
-import 'package:chameleonultragui/gui/menu/dialogs/card/create.dart';
 import 'package:chameleonultragui/gui/menu/tools/dictionary_download.dart';
 import 'package:chameleonultragui/helpers/definitions.dart';
 import 'package:chameleonultragui/helpers/general.dart';
@@ -169,10 +169,9 @@ class _LibraryPageState extends State<LibraryPage>
                   (
                     Icons.add_card_outlined,
                     strings.newCard,
-                    () => showDialog(
-                      context: context,
-                      builder: (_) =>
-                          CardCreateMenu(folderId: _LibraryMemory.cardFolder),
+                    () => openCardForm(
+                      context,
+                      folderId: _LibraryMemory.cardFolder,
                     ),
                   ),
                   (

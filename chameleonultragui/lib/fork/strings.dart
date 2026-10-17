@@ -162,6 +162,12 @@ class ForkStrings {
   String get forkNote => _get('forkNote');
   String get sourceCode => _get('sourceCode');
   String get upstreamProject => _get('upstreamProject');
+  String get cardType => _get('cardType');
+  String get identifiers => _get('identifiers');
+  String get ultralightExtras => _get('ultralightExtras');
+  String get hidFields => _get('hidFields');
+  String get appearance => _get('appearance');
+  String get editCard => _get('editCard');
 
   String deleted(String name) => _get('deleted').replaceAll('{name}', name);
   String loadedToSlot(int slot) =>
@@ -337,6 +343,12 @@ const Map<String, String> _en = {
   'forkNote': 'This build is a fork with a redesigned interface.',
   'sourceCode': 'Source code',
   'upstreamProject': 'Original project',
+  'cardType': 'Card type',
+  'identifiers': 'Identifiers',
+  'ultralightExtras': 'Ultralight extras',
+  'hidFields': 'HID Prox fields',
+  'appearance': 'Look',
+  'editCard': 'Edit card',
 };
 
 const Map<String, String> _ru = {
@@ -498,4 +510,10 @@ const Map<String, String> _ru = {
   'forkNote': 'Это сборка-форк с переработанным интерфейсом.',
   'sourceCode': 'Исходный код',
   'upstreamProject': 'Оригинальный проект',
+  'cardType': 'Тип карты',
+  'identifiers': 'Идентификаторы',
+  'ultralightExtras': 'Параметры Ultralight',
+  'hidFields': 'Поля HID Prox',
+  'appearance': 'Вид',
+  'editCard': 'Изменить карту',
 };
