@@ -33,10 +33,10 @@ https://claude.ai/artifact/B3GwzD9b8QZXHQ1zKDYvH4 — tick items as they land on
 - [ ] Save to library sheet (name prefilled, folder, colour)
 
 ## 4. Library follow-ups
-- [ ] Dictionary page (view + edit merged; search, line numbers, merge into…)
+- [x] Dictionary page (view + edit merged; search, line numbers, merge into…)
 - [ ] Card form page replacing the Create / Edit card dialogs
-- [ ] NDEF tab on the Card page
-- [ ] Long-press multi-select (move, export, delete)
+- [x] NDEF tab on the Card page
+- [x] Long-press multi-select for cards (move, delete)
 
 ## 5. Tools, Settings, Debug
 - [ ] Tools open as pages (LF/HF sniffing, T55XX cleaner); hide Gen4 WIP

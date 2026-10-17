@@ -16,6 +16,9 @@ import 'package:chameleonultragui/helpers/mifare_ultralight/dump_highlighter.dar
 import 'package:chameleonultragui/helpers/mifare_ultralight/general.dart';
 import 'package:chameleonultragui/main.dart';
 import 'package:chameleonultragui/sharedprefsprovider.dart';
+import 'package:chameleonultragui/fork/library/ndef_tab.dart';
+import 'package:chameleonultragui/helpers/ndef.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -36,15 +39,14 @@ class CardPage extends StatefulWidget {
   State<CardPage> createState() => _CardPageState();
 }
 
-enum _CardTab { info, data, keys }
+enum _CardTab { info, data, keys, ndef }
 
-class _CardPageState extends State<CardPage>
-    with SingleTickerProviderStateMixin {
+class _CardPageState extends State<CardPage> with TickerProviderStateMixin {
   TabController? tabs;
   List<_CardTab> tabList = const [];
 
   void _syncTabs(List<_CardTab> wanted) {
-    if (tabs != null && wanted.length == tabList.length) return;
+    if (tabs != null && listEquals(wanted, tabList)) return;
     final previous = tabs?.index ?? 0;
     tabs?.dispose();
     tabList = wanted;
@@ -115,6 +117,9 @@ class _CardPageState extends State<CardPage>
       _CardTab.info,
       if (card.data.isNotEmpty) _CardTab.data,
       if (classic && card.data.isNotEmpty) _CardTab.keys,
+      if (card.data.isNotEmpty &&
+          NdefContainer.detect(card.tag, card.data) != null)
+        _CardTab.ndef,
     ]);
     final current = tabList[tabs!.index];
     final canEditData =
@@ -157,7 +162,13 @@ class _CardPageState extends State<CardPage>
           ],
         ),
         actions: [
-          if (current == _CardTab.data && canEditData)
+          if (current == _CardTab.ndef)
+            IconButton(
+              tooltip: strings.edit,
+              icon: const Icon(Icons.edit_note),
+              onPressed: () => editNdef(context, card),
+            )
+          else if (current == _CardTab.data && canEditData)
             IconButton(
               tooltip: strings.editData,
               icon: const Icon(Icons.edit_note),
@@ -228,6 +239,7 @@ class _CardPageState extends State<CardPage>
                         _CardTab.info => strings.info,
                         _CardTab.data => strings.data,
                         _CardTab.keys => strings.keys,
+                        _CardTab.ndef => strings.ndef,
                       },
                     ),
                 ],
@@ -242,6 +254,7 @@ class _CardPageState extends State<CardPage>
               _CardTab.info => _InfoTab(card: card),
               _CardTab.data => _DataTab(card: card),
               _CardTab.keys => _KeysTab(card: card),
+              _CardTab.ndef => NdefTab(card: card),
             },
         ],
       ),

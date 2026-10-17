@@ -1,12 +1,11 @@
 import 'package:chameleonultragui/fork/library/card_page.dart';
+import 'package:chameleonultragui/fork/library/dictionary_page.dart';
 import 'package:chameleonultragui/fork/library/library_actions.dart';
 import 'package:chameleonultragui/fork/shell.dart';
 import 'package:chameleonultragui/fork/strings.dart';
 import 'package:chameleonultragui/fork/theme.dart';
 import 'package:chameleonultragui/generated/i18n/app_localizations.dart';
 import 'package:chameleonultragui/gui/menu/dialogs/card/create.dart';
-import 'package:chameleonultragui/gui/menu/dialogs/dictionary/edit.dart';
-import 'package:chameleonultragui/gui/menu/dialogs/dictionary/view.dart';
 import 'package:chameleonultragui/gui/menu/tools/dictionary_download.dart';
 import 'package:chameleonultragui/helpers/definitions.dart';
 import 'package:chameleonultragui/helpers/general.dart';
@@ -27,6 +26,7 @@ class _LibraryMemory {
   static String cardQuery = '';
   static String dictionaryQuery = '';
   static _Freq freq = _Freq.all;
+  static final Set<String> selected = {}; // card ids in multi-select mode
 }
 
 class LibraryPage extends StatefulWidget {
@@ -88,15 +88,58 @@ class _LibraryPageState extends State<LibraryPage>
     final strings = ForkStrings.of(context);
     final localizations = AppLocalizations.of(context)!;
 
+    // Drop selections of cards that no longer exist (deleted elsewhere).
+    final existing = prefs.getCards().map((c) => c.id).toSet();
+    _LibraryMemory.selected.retainWhere(existing.contains);
+    final selecting = _LibraryMemory.selected.isNotEmpty && tabs.index == 0;
+    final selected = _LibraryMemory.selected;
+
     return PopScope(
-      canPop: !_inFolder,
+      canPop: !_inFolder && !selecting,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) _goUp(prefs);
+        if (didPop) return;
+        if (selecting) {
+          setState(selected.clear);
+        } else {
+          _goUp(prefs);
+        }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(strings.library),
-          actions: const [SettingsButton()],
+          leading: selecting
+              ? IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => setState(selected.clear),
+                )
+              : null,
+          title: Text(
+            selecting
+                ? strings.selectedCount(selected.length)
+                : strings.library,
+          ),
+          actions: selecting
+              ? [
+                  IconButton(
+                    tooltip: strings.move,
+                    icon: const Icon(Icons.drive_file_move_outline),
+                    onPressed: () async {
+                      await LibraryActions.moveCards(context, {...selected});
+                      setState(selected.clear);
+                    },
+                  ),
+                  IconButton(
+                    tooltip: strings.delete,
+                    icon: const Icon(Icons.delete_outline),
+                    onPressed: () async {
+                      if (await LibraryActions.deleteCards(context, {
+                        ...selected,
+                      })) {
+                        setState(selected.clear);
+                      }
+                    },
+                  ),
+                ]
+              : const [SettingsButton()],
           bottom: TabBar(
             controller: tabs,
             tabs: [
@@ -118,7 +161,9 @@ class _LibraryPageState extends State<LibraryPage>
             ),
           ],
         ),
-        floatingActionButton: tabs.index == 0
+        floatingActionButton: selecting
+            ? null
+            : tabs.index == 0
             ? _AddButton(
                 items: [
                   (
@@ -154,15 +199,9 @@ class _LibraryPageState extends State<LibraryPage>
                   (
                     Icons.key_outlined,
                     strings.newDictionary,
-                    () => showDialog(
-                      context: context,
-                      builder: (_) => DictionaryEditMenu(
-                        dictionary: Dictionary(
-                          name: '',
-                          folderId: _LibraryMemory.dictionaryFolder,
-                        ),
-                        isNew: true,
-                      ),
+                    () => createDictionary(
+                      context,
+                      _LibraryMemory.dictionaryFolder,
                     ),
                   ),
                   (
@@ -607,7 +646,17 @@ class _CardsTab extends StatelessWidget {
             ),
           ),
         if (folders.isNotEmpty && cards.isNotEmpty) const Divider(indent: 16),
-        for (final card in cards) _CardRow(card: card),
+        for (final card in cards)
+          _CardRow(
+            card: card,
+            selected: _LibraryMemory.selected.contains(card.id),
+            selecting: _LibraryMemory.selected.isNotEmpty,
+            onToggle: () {
+              final s = _LibraryMemory.selected;
+              s.contains(card.id) ? s.remove(card.id) : s.add(card.id);
+              onFolderChanged();
+            },
+          ),
       ],
     );
   }
@@ -615,8 +664,16 @@ class _CardsTab extends StatelessWidget {
 
 class _CardRow extends StatelessWidget {
   final CardSave card;
+  final bool selected;
+  final bool selecting;
+  final VoidCallback onToggle;
 
-  const _CardRow({required this.card});
+  const _CardRow({
+    required this.card,
+    required this.selected,
+    required this.selecting,
+    required this.onToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -626,16 +683,23 @@ class _CardRow extends StatelessWidget {
     final hf = chameleonTagToFrequency(card.tag) == TagFrequency.hf;
 
     return ListTile(
+      selected: selected,
+      selectedTileColor: scheme.primary.withValues(alpha: 0.10),
+      onLongPress: onToggle,
       leading: Container(
         width: 36,
         height: 36,
         decoration: BoxDecoration(
-          color: card.color.withValues(alpha: 0.16),
+          color: selected ? scheme.primary : card.color.withValues(alpha: 0.16),
           borderRadius: BorderRadius.circular(6),
         ),
         child: Icon(
-          hf ? Icons.credit_card : Icons.wifi_tethering,
-          color: card.color,
+          selected
+              ? Icons.check
+              : hf
+              ? Icons.credit_card
+              : Icons.wifi_tethering,
+          color: selected ? scheme.onPrimary : card.color,
           size: 20,
         ),
       ),
@@ -658,42 +722,44 @@ class _CardRow extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: monoStyle(context, size: 12, color: scheme.onSurfaceVariant),
       ),
-      onTap: () => openCardPage(context, card),
-      trailing: _Overflow(
-        items: [
-          (
-            Icons.drive_file_move_outline,
-            strings.move,
-            () => LibraryActions.moveCard(context, card),
-            false,
-          ),
-          (
-            Icons.copy_all_outlined,
-            strings.duplicate,
-            () => LibraryActions.duplicateCard(context, card),
-            false,
-          ),
-          (
-            Icons.file_download_outlined,
-            strings.exportJson,
-            () => saveTag(card, context, false),
-            false,
-          ),
-          if (card.data.isNotEmpty)
-            (
-              Icons.file_download_outlined,
-              strings.exportBin,
-              () => saveTag(card, context, true),
-              false,
+      onTap: selecting ? onToggle : () => openCardPage(context, card),
+      trailing: selecting
+          ? null
+          : _Overflow(
+              items: [
+                (
+                  Icons.drive_file_move_outline,
+                  strings.move,
+                  () => LibraryActions.moveCard(context, card),
+                  false,
+                ),
+                (
+                  Icons.copy_all_outlined,
+                  strings.duplicate,
+                  () => LibraryActions.duplicateCard(context, card),
+                  false,
+                ),
+                (
+                  Icons.file_download_outlined,
+                  strings.exportJson,
+                  () => saveTag(card, context, false),
+                  false,
+                ),
+                if (card.data.isNotEmpty)
+                  (
+                    Icons.file_download_outlined,
+                    strings.exportBin,
+                    () => saveTag(card, context, true),
+                    false,
+                  ),
+                (
+                  Icons.delete_outline,
+                  strings.delete,
+                  () => LibraryActions.deleteCard(context, card),
+                  true,
+                ),
+              ],
             ),
-          (
-            Icons.delete_outline,
-            strings.delete,
-            () => LibraryActions.deleteCard(context, card),
-            true,
-          ),
-        ],
-      ),
     );
   }
 }
@@ -824,22 +890,13 @@ class _DictionariesTab extends StatelessWidget {
                 color: scheme.onSurfaceVariant,
               ),
             ),
-            onTap: () => showDialog(
-              context: context,
-              builder: (_) => DictionaryViewMenu(
-                dictionary: dictionary,
-                onMove: (d) => LibraryActions.moveDictionary(context, d),
-              ),
-            ),
+            onTap: () => openDictionaryPage(context, dictionary),
             trailing: _Overflow(
               items: [
                 (
                   Icons.edit_outlined,
                   strings.edit,
-                  () => showDialog(
-                    context: context,
-                    builder: (_) => DictionaryEditMenu(dictionary: dictionary),
-                  ),
+                  () => openDictionaryPage(context, dictionary),
                   false,
                 ),
                 (

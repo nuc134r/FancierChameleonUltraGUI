@@ -534,6 +534,53 @@ class LibraryActions {
     return true;
   }
 
+  static Future<void> moveCards(BuildContext context, Set<String> ids) async {
+    final destination = await pickFolder(context, CardFolderStore());
+    if (destination == null || !context.mounted) return;
+    final appState = _state(context);
+    final cards = appState.sharedPreferencesProvider.getCards();
+    for (final c in cards.where((c) => ids.contains(c.id))) {
+      c.folderId = destination.isEmpty ? null : destination;
+    }
+    appState.sharedPreferencesProvider.setCards(cards);
+    appState.changesMade();
+  }
+
+  // Deletes several cards at once (asks first when "Confirm deletions" is on), with Undo.
+  static Future<bool> deleteCards(BuildContext context, Set<String> ids) async {
+    final appState = _state(context);
+    final prefs = appState.sharedPreferencesProvider;
+    final strings = ForkStrings.of(context);
+    if (prefs.getConfirmDelete()) {
+      final confirm = await showDialog(
+        context: context,
+        builder: (context) => ConfirmDeletionMenu(
+          thingBeingDeleted: strings.selectedCount(ids.length),
+        ),
+      );
+      if (confirm != true || !context.mounted) return false;
+    }
+    final messenger = ScaffoldMessenger.of(context);
+    final before = prefs.getCards();
+    prefs.setCards(before.where((c) => !ids.contains(c.id)).toList());
+    appState.changesMade();
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(strings.deletedCount(ids.length)),
+        action: SnackBarAction(
+          label: strings.undo,
+          onPressed: () {
+            final restored = before.where((c) => ids.contains(c.id));
+            prefs.setCards([...prefs.getCards(), ...restored]);
+            appState.changesMade();
+          },
+        ),
+      ),
+    );
+    return true;
+  }
+
   static Future<bool> deleteDictionary(
     BuildContext context,
     Dictionary dictionary,

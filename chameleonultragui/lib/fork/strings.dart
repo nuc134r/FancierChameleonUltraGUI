@@ -132,7 +132,19 @@ class ForkStrings {
   String get dictionary => _get('dictionary');
   String get skipDefault => _get('skipDefault');
   String get tryAnotherCard => _get('tryAnotherCard');
+  String get searchKeys => _get('searchKeys');
+  String get mergeInto => _get('mergeInto');
+  String get merge => _get('merge');
+  String get copyAll => _get('copyAll');
+  String get keysHint => _get('keysHint');
+  String get noKeysEntered => _get('noKeysEntered');
+  String get save => _get('save');
+  String ignoredLines(int n) => _get('ignoredLines').replaceAll('{n}', '$n');
+  String mergedKeys(int n) => _get('mergedKeys').replaceAll('{n}', '$n');
 
+  String selectedCount(int n) => _get('selectedCount').replaceAll('{n}', '$n');
+  String deletedCount(int n) => _get('deletedCount').replaceAll('{n}', '$n');
+  String get selectAll => _get('selectAll');
   String deleted(String name) => _get('deleted').replaceAll('{name}', name);
   String loadedToSlot(int slot) =>
       _get('loadedToSlot').replaceAll('{slot}', '$slot');
@@ -278,6 +290,18 @@ const Map<String, String> _en = {
   'dictionary': 'Dictionary',
   'skipDefault': 'Skip built-in keys',
   'tryAnotherCard': 'Move the card a little or try another one.',
+  'searchKeys': 'Search keys',
+  'mergeInto': 'Merge other dictionaries in…',
+  'merge': 'Merge',
+  'copyAll': 'Copy all keys',
+  'keysHint': 'One hex key per line. Text after # or a space is ignored.',
+  'noKeysEntered': 'Add at least one valid key.',
+  'save': 'Save',
+  'ignoredLines': 'Saved. {n} lines were not valid keys and were skipped.',
+  'mergedKeys': 'Added {n} new keys',
+  'selectedCount': '{n} selected',
+  'deletedCount': 'Deleted {n} cards',
+  'selectAll': 'Select all',
 };
 
 const Map<String, String> _ru = {
@@ -409,4 +433,17 @@ const Map<String, String> _ru = {
   'dictionary': 'Словарь',
   'skipDefault': 'Без встроенных ключей',
   'tryAnotherCard': 'Сдвиньте карту или попробуйте другую.',
+  'searchKeys': 'Поиск ключей',
+  'mergeInto': 'Добавить ключи из других словарей…',
+  'merge': 'Объединить',
+  'copyAll': 'Скопировать все ключи',
+  'keysHint':
+      'Один hex-ключ на строку. Текст после # или пробела игнорируется.',
+  'noKeysEntered': 'Добавьте хотя бы один корректный ключ.',
+  'save': 'Сохранить',
+  'ignoredLines': 'Сохранено. Пропущено строк с неверными ключами: {n}.',
+  'mergedKeys': 'Добавлено новых ключей: {n}',
+  'selectedCount': 'Выбрано: {n}',
+  'deletedCount': 'Удалено карт: {n}',
+  'selectAll': 'Выбрать все',
 };
