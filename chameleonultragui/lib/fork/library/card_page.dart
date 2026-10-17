@@ -509,11 +509,12 @@ class _DataTabState extends State<_DataTab> {
         );
     }
 
-    return ListView(
-      padding: const EdgeInsets.only(bottom: 24),
+    // The HEX / ASCII bar stays pinned; only the dump scrolls.
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
           child: Row(
             children: [
               SegmentedButton<bool>(
@@ -536,7 +537,12 @@ class _DataTabState extends State<_DataTab> {
             ],
           ),
         ),
-        ...sections,
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.only(bottom: 24),
+            children: sections,
+          ),
+        ),
       ],
     );
   }

@@ -3,6 +3,12 @@
 Release notes for this fork's GitHub releases. Each `## <version>` section becomes the notes of
 the release tagged `v<version>` (see docs/FORK_RELEASING.md). Upstream's history is in its own releases.
 
+## 2.3.1
+
+- Library card list shows only the card type under the name (no UID). Search still finds cards
+  by UID.
+- Card page › Data: the HEX / ASCII switch stays visible while scrolling the dump.
+
 ## 2.3.0
 
 - Scan tab rebuilt: HF | LF switch, Scan and Keep scanning buttons, a clear "hold a card" and

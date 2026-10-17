@@ -716,7 +716,7 @@ class _CardRow extends StatelessWidget {
         ],
       ),
       subtitle: Text(
-        '${card.uid.isEmpty ? '—' : card.uid} · ${chameleonTagToString(card.tag, localizations)}',
+        chameleonTagToString(card.tag, localizations),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: monoStyle(context, size: 12, color: scheme.onSurfaceVariant),
