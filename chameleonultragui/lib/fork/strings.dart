@@ -114,6 +114,24 @@ class ForkStrings {
   String get factoryResetHint => _get('factoryResetHint');
   String get seconds => _get('seconds');
   String get ms => _get('ms');
+  String get scanAction => _get('scanAction');
+  String get scanAgain => _get('scanAgain');
+  String get keepScanning => _get('keepScanning');
+  String get stopScanning => _get('stopScanning');
+  String get holdCard => _get('holdCard');
+  String get holdCardHf => _get('holdCardHf');
+  String get holdCardLf => _get('holdCardLf');
+  String get stepKeys => _get('stepKeys');
+  String get stepRecover => _get('stepRecover');
+  String get stepDump => _get('stepDump');
+  String get saved => _get('saved');
+  String get open => _get('open');
+  String get folder => _get('folder');
+  String get backdoor => _get('backdoor');
+  String get ev1 => _get('ev1');
+  String get dictionary => _get('dictionary');
+  String get skipDefault => _get('skipDefault');
+  String get tryAnotherCard => _get('tryAnotherCard');
 
   String deleted(String name) => _get('deleted').replaceAll('{name}', name);
   String loadedToSlot(int slot) =>
@@ -241,6 +259,25 @@ const Map<String, String> _en = {
   'factoryResetHint': 'Erases all slots and settings',
   'seconds': 's',
   'ms': 'ms',
+  'scanAction': 'Scan',
+  'scanAgain': 'Scan again',
+  'keepScanning': 'Keep scanning',
+  'stopScanning': 'Stop scanning',
+  'holdCard': 'Hold a card to the Chameleon',
+  'holdCardHf': 'HF reads 13.56 MHz cards: MIFARE Classic, Ultralight, NTAG.',
+  'holdCardLf':
+      'LF reads 125 kHz cards: EM410x, HID Prox, Viking, PAC, ioProx.',
+  'stepKeys': 'Keys',
+  'stepRecover': 'Recover',
+  'stepDump': 'Dump',
+  'saved': 'Saved to library',
+  'open': 'Open',
+  'folder': 'Folder',
+  'backdoor': 'Backdoor',
+  'ev1': 'EV1',
+  'dictionary': 'Dictionary',
+  'skipDefault': 'Skip built-in keys',
+  'tryAnotherCard': 'Move the card a little or try another one.',
 };
 
 const Map<String, String> _ru = {
@@ -353,4 +390,23 @@ const Map<String, String> _ru = {
   'factoryResetHint': 'Стирает все слоты и настройки',
   'seconds': 'с',
   'ms': 'мс',
+  'scanAction': 'Сканировать',
+  'scanAgain': 'Ещё раз',
+  'keepScanning': 'Сканировать непрерывно',
+  'stopScanning': 'Остановить',
+  'holdCard': 'Поднесите карту к Chameleon',
+  'holdCardHf': 'HF читает карты 13,56 МГц: MIFARE Classic, Ultralight, NTAG.',
+  'holdCardLf':
+      'LF читает карты 125 кГц: EM410x, HID Prox, Viking, PAC, ioProx.',
+  'stepKeys': 'Ключи',
+  'stepRecover': 'Подбор',
+  'stepDump': 'Дамп',
+  'saved': 'Сохранено в библиотеку',
+  'open': 'Открыть',
+  'folder': 'Папка',
+  'backdoor': 'Бэкдор',
+  'ev1': 'EV1',
+  'dictionary': 'Словарь',
+  'skipDefault': 'Без встроенных ключей',
+  'tryAnotherCard': 'Сдвиньте карту или попробуйте другую.',
 };
