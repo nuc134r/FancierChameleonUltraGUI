@@ -7,6 +7,10 @@ the release tagged `v<version>` (see docs/FORK_RELEASING.md). Upstream's history
 
 - Scan tab: the HF | LF switch and the Scan / Keep scanning buttons sit at the bottom, above the
   tab bar, within thumb reach. Results scroll above them.
+- Slot page: the on/off switch shows only for a side with a card (or an empty side that is still on,
+  with a hint to turn it off), plus a note on what it does: an off side keeps its card without
+  emulating it, and the buttons skip a slot with both sides off.
+- Device tab: a slot with both sides off is marked OFF.
 
 ## 2.3.2
 

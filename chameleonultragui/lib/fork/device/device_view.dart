@@ -31,6 +31,9 @@ class SlotInfo {
   );
 
   bool get used => hf != TagType.unknown || lf != TagType.unknown;
+
+  // Both sides off: the firmware skips the slot when cycling with the buttons.
+  bool get off => !hfEnabled && !lfEnabled;
 }
 
 class _DeviceStatus {
@@ -583,7 +586,8 @@ class _SlotRow extends StatelessWidget {
     String side(TagType type, String name, bool enabled) {
       if (type == TagType.unknown) return strings.slotEmpty;
       final label = name.isEmpty ? localizations.no_name : name;
-      final off = enabled ? '' : ' · ${strings.slotDisabled}';
+      // A fully-off slot says OFF once, at the end of the row.
+      final off = enabled || slot.off ? '' : ' · ${strings.slotDisabled}';
       return '$label · ${chameleonTagToString(type, localizations)}$off';
     }
 
@@ -668,15 +672,16 @@ class _SlotRow extends StatelessWidget {
                 ],
               ),
             ),
-            if (active)
+            if (active || (slot.used && slot.off))
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  strings.active.toUpperCase(),
+                  (active ? strings.active : strings.slotDisabled)
+                      .toUpperCase(),
                   style: monoStyle(
                     context,
                     size: 10.5,
-                    color: scheme.primary,
+                    color: active ? scheme.primary : scheme.onSurfaceVariant,
                   ).copyWith(letterSpacing: 1),
                 ),
               ),

@@ -96,6 +96,8 @@ class ForkStrings {
   String get loadFromLibrary => _get('loadFromLibrary');
   String get editSlot => _get('editSlot');
   String get emulationOptions => _get('emulationOptions');
+  String get sideSwitchHint => _get('sideSwitchHint');
+  String get emptyEnabledHint => _get('emptyEnabledHint');
   String get noEmulation => _get('noEmulation');
   String get outdatedProtocol => _get('outdatedProtocol');
   String slotsUsed(int used) => _get('slotsUsed').replaceAll('{used}', '$used');
@@ -278,6 +280,8 @@ const Map<String, String> _en = {
   'slotDisabled': 'Off',
   'loadFromLibrary': 'Load from library',
   'editSlot': 'Edit',
+  'sideSwitchHint': 'Turn a side off to keep its card without emulating it. The buttons skip a slot with both sides off.',
+  'emptyEnabledHint': 'On, but nothing to emulate. Turn it off so the buttons can skip an empty slot.',
   'emulationOptions': 'Magic modes, PRNG, write mode and Mfkey32 nonce collection are under HF › Edit.',
   'noEmulation': 'This card type cannot be emulated yet.',
   'outdatedProtocol':
@@ -448,6 +452,8 @@ const Map<String, String> _ru = {
   'slotDisabled': 'Выкл',
   'loadFromLibrary': 'Из библиотеки',
   'editSlot': 'Изменить',
+  'sideSwitchHint': 'Выключите сторону, чтобы карта осталась в слоте, но не эмулировалась. Слот с обеими выключенными сторонами кнопки пропускают.',
+  'emptyEnabledHint': 'Включена, но эмулировать нечего. Выключите, чтобы кнопки пропускали пустой слот.',
   'emulationOptions': 'Magic-режимы, PRNG, режим записи и сбор nonce для Mfkey32 — в HF › Изменить.',
   'noEmulation': 'Этот тип карты пока нельзя эмулировать.',
   'outdatedProtocol': 'Прошивка использует старый протокол. Обновите её для полной работы приложения.',

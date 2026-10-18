@@ -428,6 +428,13 @@ class _SlotPageState extends State<SlotPage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
                   child: Text(
+                    strings.sideSwitchHint,
+                    style: TextStyle(color: scheme.onSurfaceVariant),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                  child: Text(
                     strings.emulationOptions,
                     style: TextStyle(color: scheme.onSurfaceVariant),
                   ),
@@ -471,10 +478,13 @@ class _Side extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // An empty side is never emulated, so its switch only matters while it is still on.
         SectionLabel(
           label,
-          trailing: Switch(value: enabled, onChanged: onEnabled),
-          padding: const EdgeInsets.fromLTRB(16, 12, 12, 0),
+          trailing: empty && !enabled
+              ? null
+              : Switch(value: enabled, onChanged: onEnabled),
+          padding: EdgeInsets.fromLTRB(16, 12, 12, empty && !enabled ? 12 : 0),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
@@ -496,6 +506,15 @@ class _Side extends StatelessWidget {
                     context,
                     size: 12,
                     color: scheme.onSurfaceVariant,
+                  ),
+                ),
+              if (empty && enabled)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    strings.emptyEnabledHint,
+                    style: Theme.of(context).textTheme.bodySmall
+                        ?.copyWith(color: scheme.onSurfaceVariant),
                   ),
                 ),
             ],
